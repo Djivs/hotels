@@ -16,6 +16,8 @@ private slots:
     void processAuth(int result);
 private:
     void setupLogin();
+    void setupAdmin();
+
     void setScrollWidget(QWidget *w);
     SQLWorker *worker;
 };

@@ -20,6 +20,7 @@ set(PROJECT_SOURCES
         userwidget.h userwidget.cpp
         calendarwidget.h calendarwidget.cpp
         adminwidget.h adminwidget.cpp
+        hotelswidget.h hotelswidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

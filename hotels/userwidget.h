@@ -1,3 +1,4 @@
+//TODO: choose room's hotel
 #ifndef USERWIDGET_H
 #define USERWIDGET_H
 

@@ -16,10 +16,22 @@ public:
 
 signals:
     void exit();
+    void hotels();
+    void rooms();
+    void workers();
+    void guests();
+    void freeRooms();
+    void totalProfit();
 private:
     void setupUi();
 
     QPushButton *exitButton;
+    QPushButton *hotelsButton;
+    QPushButton *roomsButton;
+    QPushButton *workersButton;
+    QPushButton *guestsButton;
+    QPushButton *freeRoomsButton;
+    QPushButton *totalProfitButton;
 
     QVBoxLayout *layout;
 

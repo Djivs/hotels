@@ -1,8 +1,10 @@
+// TODO: make setupUser();
 #include "mainwindow.h"
 
 #include "loginwidget.h"
 #include "userwidget.h"
 #include "adminwidget.h"
+#include "hotelswidget.h"
 
 #include <iostream>
 #include <QDebug>
@@ -29,14 +31,27 @@ void MainWindow::setupLogin() {
     connect(loginWidget, &LoginWidget::userChecked, this, &MainWindow::processAuth);
 }
 
-void MainWindow::processAuth(int result) {
-    if (!result) {
-        AdminWidget *w = new AdminWidget(worker);
+void MainWindow::setupAdmin() {
+    AdminWidget *w = new AdminWidget(worker);
+    setScrollWidget(w);
+
+    connect(w, &AdminWidget::exit, this, [this] {
+        setupLogin();
+    });
+
+    connect(w, &AdminWidget::hotels, this, [this] {
+        HotelsWidget *w = new HotelsWidget(worker);
         setScrollWidget(w);
 
-        connect(w, &AdminWidget::exit, this, [this] {
-            setupLogin();
+        connect(w, &HotelsWidget::exit, this, [this] {
+            setupAdmin();
         });
+    });
+}
+
+void MainWindow::processAuth(int result) {
+    if (!result) {
+        setupAdmin();
     } else {
         UserWidget *w = new UserWidget(worker, result);
         setScrollWidget(w);
