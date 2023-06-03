@@ -13,7 +13,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 private slots:
-    void processAuth(QString login);
+    void processAuth(int result);
 private:
     void setupLogin();
     void setScrollWidget(QWidget *w);

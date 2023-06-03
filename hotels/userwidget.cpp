@@ -3,15 +3,17 @@
 #include <QLabel>
 #include <QDebug>
 #include <QCompleter>
+#include <QMessageBox>
 
-UserWidget::UserWidget(SQLWorker *w) {
+UserWidget::UserWidget(SQLWorker *w, int _guestId) {
     worker = w;
+    guestId = _guestId;
 
     setupUi();
     setupWorker();
 
     emit getFreeRooms(QDate::currentDate(), QDate::currentDate());
-    emit getGuests();
+    emit getGuest(guestId);
 }
 
 void UserWidget::setupUi() {
@@ -27,6 +29,8 @@ void UserWidget::setupUi() {
     freeRoomsTable->setModel(freeRoomsModel);
 
     guestName = new QLineEdit;
+    guestName->setReadOnly(true);
+
     roomBox = new QComboBox;
     calendar = new CalendarWidget;
 
@@ -47,10 +51,9 @@ void UserWidget::setupUi() {
 
     layout = new QVBoxLayout;
     layout->addWidget(new QLabel("Бронирование номеров"));
-
+    layout->addLayout(guestLayout);
     layout->addWidget(new QLabel("Свободные номера:"));
     layout->addWidget(freeRoomsTable);
-    layout->addLayout(guestLayout);
     layout->addLayout(roomLayout);
     layout->addLayout(calendarLayout);
     layout->addWidget(bookButton);
@@ -71,20 +74,25 @@ void UserWidget::setupWorker() {
     connect(this, &UserWidget::getGuests, worker, &SQLWorker::getGuests);
     connect(worker, &SQLWorker::getGuestsReady, this, &UserWidget::processGuests);
 
+    connect(this, &UserWidget::getGuest, worker, &SQLWorker::getGuest);
+    connect(worker, &SQLWorker::getGuestReady, this, &UserWidget::processGuest);
+
+    connect(bookButton, &QPushButton::clicked, this, &UserWidget::makeBooking);
+    connect(this, &UserWidget::book, worker, &SQLWorker::book);
+
     connect(calendar, &CalendarWidget::rangeChanged, this, [this] {emit getFreeRooms(calendar->getFromDate(), calendar->getToDate());});
 }
 
-void UserWidget::book() {
+void UserWidget::makeBooking() {
 
     const QPair<QDate, QDate> dateRange = calendar->getRange();
-    const QString guest = guestName->text();
     const int roomNumber = roomBox->currentText().toInt();
 
+    emit book(guestId, roomNumber, dateRange.first, dateRange.second);
 
-    if (guest.isEmpty()) {
-        qDebug() << "fill guests name first!";
-        return;
-    }
+    QMessageBox::information(this, "Бронирование", "Забронировано!");
+
+    emit getFreeRooms(calendar->getFromDate(), calendar->getToDate());
 }
 
 void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
@@ -94,15 +102,24 @@ void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
     for (int i = 0; i < rooms.size(); ++i) {
         const auto room = rooms[i];
 
-        freeRoomsModel->setData(freeRoomsModel->index(i, 0), room["hotel_name"]);
-        freeRoomsModel->setData(freeRoomsModel->index(i, 1), room["kind"]);
-        freeRoomsModel->setData(freeRoomsModel->index(i, 2), room["number"]);
-        freeRoomsModel->setData(freeRoomsModel->index(i, 3), room["price"]);
+        const auto hotelName = room["hotel_name"];
+        const auto kind = room["kind"];
+        const auto number = room["number"];
+        const auto price = room["price"];
 
-        roomBox->addItem(room["number"].toString());
+        freeRoomsModel->setData(freeRoomsModel->index(i, 0), hotelName);
+        freeRoomsModel->setData(freeRoomsModel->index(i, 1), kind);
+        freeRoomsModel->setData(freeRoomsModel->index(i, 2), number);
+        freeRoomsModel->setData(freeRoomsModel->index(i, 3), price);
+
+        roomBox->addItem(number.toString());
     }
 }
 
 void UserWidget::processGuests(QStringList guests) {
     guestName->setCompleter(new QCompleter(guests));
+}
+
+void UserWidget::processGuest(QString name) {
+    guestName->setText(name);
 }

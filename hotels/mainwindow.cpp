@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     worker = new SQLWorker;
 
-    this->setMinimumSize(600, 600);
+    this->setMinimumSize(800, 700);
 
 
     setupLogin();
@@ -28,11 +28,11 @@ void MainWindow::setupLogin() {
     connect(loginWidget, &LoginWidget::userChecked, this, &MainWindow::processAuth);
 }
 
-void MainWindow::processAuth(QString login) {
-    if (login == "admin") {
+void MainWindow::processAuth(int result) {
+    if (!result) {
         std::cout << "admin\n";
-    } else if (login == "user") {
-        UserWidget *w = new UserWidget(worker);
+    } else {
+        UserWidget *w = new UserWidget(worker, result);
         setScrollWidget(w);
 
         connect(w, &UserWidget::exit, this, [this] {

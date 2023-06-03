@@ -43,8 +43,8 @@ void LoginWidget::setupWorker() {
     connect(worker, &SQLWorker::checkUserReady, this, &LoginWidget::processAuthResults);
 }
 
-void LoginWidget::processAuthResults(bool result) {
-    if (result) {
-        emit userChecked(login->text());
+void LoginWidget::processAuthResults(int result) {
+    if (result >= 0) {
+        emit userChecked(result);
     }
 }

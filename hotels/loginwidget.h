@@ -16,9 +16,9 @@ public:
     explicit LoginWidget(SQLWorker *w);
 signals:
     void checkUser(QString login, QString password);
-    void userChecked(QString login);
+    void userChecked(int);
 private slots:
-    void processAuthResults(bool result);
+    void processAuthResults(int result);
 private:
     void setupUi();
     void setupWorker();

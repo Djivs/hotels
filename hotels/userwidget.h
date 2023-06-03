@@ -18,15 +18,18 @@ class UserWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit UserWidget(SQLWorker *w);
+    explicit UserWidget(SQLWorker *w, int _guestId);
 signals:
     void getFreeRooms(QDate from, QDate to);
     void getGuests();
+    void getGuest(int);
     void exit();
+    void book(int, int, QDate, QDate);
 private slots:
     void processFreeRooms(QVector <QMap <QString, QVariant>> rooms);
     void processGuests(QStringList guests);
-    void book();
+    void processGuest(QString name);
+    void makeBooking();
 private:
     void setupUi();
     void setupWorker();
@@ -50,6 +53,8 @@ private:
     SQLWorker *worker;
 
     QStringList header = {"Отель", "Тип", "Номер", "Цена"};
+
+    int guestId;
 
 
 };

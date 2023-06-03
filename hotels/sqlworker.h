@@ -11,13 +11,16 @@ class SQLWorker : public QObject
 public:
     explicit SQLWorker(QObject *parent = nullptr);
 signals:
-    void checkUserReady(bool result);
+    void checkUserReady(int result);
     void getFreeRoomsReady(QVector <QMap <QString, QVariant>>);
     void getGuestsReady(QStringList);
+    void getGuestReady(QString);
 public slots:
+    void book(int guestId, int roomNumber, QDate fromDate, QDate toDate);
     void checkUser(QString login, QString pass);
     void getFreeRooms(QDate from, QDate to);
     void getGuests();
+    void getGuest(int id);
 private:
     QSqlDatabase db;
 

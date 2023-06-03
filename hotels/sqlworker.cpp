@@ -30,7 +30,7 @@ void SQLWorker::checkUser(QString login, QString password) {
     query.exec();
 
     if (query.next()) {
-        emit checkUserReady(query.value(0).toBool());
+        emit checkUserReady(query.value(0).toInt());
     } else {
         qDebug() << "Can't perform query.\nError:" << query.lastError().text();
     }
@@ -40,14 +40,8 @@ void SQLWorker::getFreeRooms(QDate from, QDate to) {
     QSqlQuery query;
     query.prepare("select * from get_free_rooms(:from_date, :to_date)");
 
-    QString fromString = QString::number(from.year()) + '.' + QString::number(from.month()) + '.' + QString::number(from.day());
-    QString toString = QString::number(to.year()) + '.' + QString::number(to.month()) + '.' + QString::number(to.day());
-
-
-    query.bindValue(":from_date", fromString);
-    query.bindValue(":to_date", toString);
-
-    qDebug() << from << to;
+    query.bindValue(":from_date", from);
+    query.bindValue(":to_date", to);
 
     query.exec();
     QVector <QMap <QString, QVariant>> rooms;
@@ -79,3 +73,29 @@ void SQLWorker::getGuests() {
 
     emit getGuestsReady(guests);
 }
+
+void SQLWorker::getGuest(int id) {
+    QSqlQuery query;
+    query.prepare("select name from guest where id = :id");
+    query.bindValue(":id", id);
+
+    query.exec();
+
+    if (query.next()) {
+        emit getGuestReady(query.value(0).toString());
+    }
+
+}
+
+void SQLWorker::book(int guestId, int roomNumber, QDate fromDate, QDate toDate) {
+    QSqlQuery query;
+    query.prepare("select * from book(:guestId, :roomNumber, :fromDate, :toDate)");
+
+    query.bindValue(":guestId", guestId);
+    query.bindValue(":roomNumber", roomNumber);
+    query.bindValue(":fromDate", fromDate);
+    query.bindValue(":toDate", toDate);
+
+    query.exec();
+}
+
