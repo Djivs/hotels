@@ -13,9 +13,11 @@ public:
 signals:
     void checkUserReady(bool result);
     void getFreeRoomsReady(QVector <QMap <QString, QVariant>>);
+    void getGuestsReady(QStringList);
 public slots:
     void checkUser(QString login, QString pass);
     void getFreeRooms();
+    void getGuests();
 private:
     QSqlDatabase db;
 

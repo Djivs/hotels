@@ -2,6 +2,7 @@
 
 #include <QLabel>
 #include <QDebug>
+#include <QCompleter>
 
 UserWidget::UserWidget(SQLWorker *w) {
     worker = w;
@@ -10,6 +11,7 @@ UserWidget::UserWidget(SQLWorker *w) {
     setupWorker();
 
     emit getFreeRooms();
+    emit getGuests();
 }
 
 void UserWidget::setupUi() {
@@ -65,6 +67,9 @@ void UserWidget::setupUi() {
 void UserWidget::setupWorker() {
     connect(this, &UserWidget::getFreeRooms, worker, &SQLWorker::getFreeRooms);
     connect(worker, &SQLWorker::getFreeRoomsReady, this, &UserWidget::processFreeRooms);
+
+    connect(this, &UserWidget::getGuests, worker, &SQLWorker::getGuests);
+    connect(worker, &SQLWorker::getGuestsReady, this, &UserWidget::processGuests);
 }
 
 void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
@@ -77,5 +82,10 @@ void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
         freeRoomsModel->setData(freeRoomsModel->index(i, 2), room["number"]);
         freeRoomsModel->setData(freeRoomsModel->index(i, 3), room["price"]);
 
+        roomBox->addItem(room["number"].toString());
     }
+}
+
+void UserWidget::processGuests(QStringList guests) {
+    guestName->setCompleter(new QCompleter(guests));
 }

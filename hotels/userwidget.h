@@ -21,9 +21,11 @@ public:
     explicit UserWidget(SQLWorker *w);
 signals:
     void getFreeRooms();
+    void getGuests();
     void exit();
 private slots:
     void processFreeRooms(QVector <QMap <QString, QVariant>> rooms);
+    void processGuests(QStringList guests);
 private:
     void setupUi();
     void setupWorker();

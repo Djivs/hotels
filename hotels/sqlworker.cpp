@@ -55,3 +55,18 @@ void SQLWorker::getFreeRooms() {
     emit getFreeRoomsReady(rooms);
 
 }
+
+void SQLWorker::getGuests() {
+    QSqlQuery query;
+    query.prepare("select name from guest");
+
+    query.exec();
+
+    QStringList guests;
+
+    while (query.next()) {
+        guests << query.value(0).toString();
+    }
+
+    emit getGuestsReady(guests);
+}
