@@ -5,8 +5,14 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QTableView>
+#include <QStandardItemModel>
+#include <QLineEdit>
+#include <QComboBox>
+#include <QDate>
 
 #include "sqlworker.h"
+#include "calendarwidget.h"
 
 class UserWidget : public QWidget
 {
@@ -20,6 +26,19 @@ private:
     void setupWorker();
 
     QPushButton *exitButton;
+
+    QStandardItemModel *freeRoomsModel;
+    QTableView *freeRoomsTable;
+
+    QLineEdit *guestName;
+    QComboBox *roomBox;
+    CalendarWidget *calendar;
+
+    QPushButton *bookButton;
+
+    QHBoxLayout *guestLayout;
+    QHBoxLayout *roomLayout;
+    QHBoxLayout *calendarLayout;
     QVBoxLayout *layout;
 
     SQLWorker *worker;

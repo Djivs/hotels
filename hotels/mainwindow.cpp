@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
     worker = new SQLWorker;
 
+    this->setMinimumSize(600, 600);
+
+
     setupLogin();
 }
 
