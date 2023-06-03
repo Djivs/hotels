@@ -6,23 +6,20 @@
 #include <QVBoxLayout>
 
 #include "sqlworker.h"
+#include "formwidget.h"
 
-class HotelsWidget : public QWidget
+class HotelsWidget : public FormWidget
 {
     Q_OBJECT
 public:
-    explicit HotelsWidget(SQLWorker *w);
-
-signals:
-    void exit();
+    explicit HotelsWidget(SQLWorker *w, FormWidget *parent = nullptr);
+    ~HotelsWidget();
 private:
+    void loadPage() {}
+    void connectWorker() {}
     void setupUi();
 
     QPushButton *exitButton;
-
-    QVBoxLayout *layout;
-
-    SQLWorker *worker;
 
 };
 
