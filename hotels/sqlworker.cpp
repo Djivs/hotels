@@ -34,3 +34,24 @@ void SQLWorker::checkUser(QString login, QString password) {
         qDebug() << "Can't perform query.\nError:" << query.lastError().text();
     }
 }
+
+void SQLWorker::getFreeRooms() {
+    QSqlQuery query;
+    query.prepare("select * from get_free_rooms()");
+
+    query.exec();
+
+    QVector <QMap <QString, QVariant>> rooms;
+
+    while (query.next()) {
+        QMap <QString, QVariant> map;
+        map["hotel_name"] = query.value(0);
+        map["kind"] = query.value(1);
+        map["number"] = query.value(2);
+        map["price"] = query.value(3);
+        rooms.push_back(map);
+    }
+
+    emit getFreeRoomsReady(rooms);
+
+}

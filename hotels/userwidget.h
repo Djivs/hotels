@@ -20,7 +20,10 @@ class UserWidget : public QWidget
 public:
     explicit UserWidget(SQLWorker *w);
 signals:
+    void getFreeRooms();
     void exit();
+private slots:
+    void processFreeRooms(QVector <QMap <QString, QVariant>> rooms);
 private:
     void setupUi();
     void setupWorker();
@@ -42,6 +45,8 @@ private:
     QVBoxLayout *layout;
 
     SQLWorker *worker;
+
+    QStringList header = {"Отель", "Тип", "Номер", "Цена"};
 
 
 };

@@ -12,8 +12,10 @@ public:
     explicit SQLWorker(QObject *parent = nullptr);
 signals:
     void checkUserReady(bool result);
+    void getFreeRoomsReady(QVector <QMap <QString, QVariant>>);
 public slots:
     void checkUser(QString login, QString pass);
+    void getFreeRooms();
 private:
     QSqlDatabase db;
 

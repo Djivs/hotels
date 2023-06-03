@@ -1,12 +1,15 @@
 #include "userwidget.h"
 
 #include <QLabel>
+#include <QDebug>
 
 UserWidget::UserWidget(SQLWorker *w) {
     worker = w;
 
     setupUi();
     setupWorker();
+
+    emit getFreeRooms();
 }
 
 void UserWidget::setupUi() {
@@ -14,6 +17,11 @@ void UserWidget::setupUi() {
 
     freeRoomsModel = new QStandardItemModel;
     freeRoomsTable = new QTableView;
+
+    freeRoomsModel->setColumnCount(header.size());
+    for (int i = 0; i < header.size(); ++i) {
+        freeRoomsModel->setHeaderData(i, Qt::Horizontal, header[i]);
+    }
     freeRoomsTable->setModel(freeRoomsModel);
 
     guestName = new QLineEdit;
@@ -55,5 +63,19 @@ void UserWidget::setupUi() {
 }
 
 void UserWidget::setupWorker() {
+    connect(this, &UserWidget::getFreeRooms, worker, &SQLWorker::getFreeRooms);
+    connect(worker, &SQLWorker::getFreeRoomsReady, this, &UserWidget::processFreeRooms);
+}
 
+void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
+    freeRoomsModel->setRowCount(rooms.size());
+    for (int i = 0; i < rooms.size(); ++i) {
+        const auto room = rooms[i];
+
+        freeRoomsModel->setData(freeRoomsModel->index(i, 0), room["hotel_name"]);
+        freeRoomsModel->setData(freeRoomsModel->index(i, 1), room["kind"]);
+        freeRoomsModel->setData(freeRoomsModel->index(i, 2), room["number"]);
+        freeRoomsModel->setData(freeRoomsModel->index(i, 3), room["price"]);
+
+    }
 }
