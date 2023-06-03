@@ -12,8 +12,15 @@ class CalendarWidget : public QCalendarWidget
     Q_OBJECT
 public:
     CalendarWidget();
-    QDate getFromDate() const {return fromDate;}
-    QDate getToDate() const {return toDate;}
+
+    void setRange(QDate from, QDate to);
+
+
+    QPair<QDate, QDate> getRange() const;
+    QDate getFromDate() const;
+    QDate getToDate() const;
+signals:
+    void rangeChanged();
 private:
     void highlightRange(QTextCharFormat format);
     QDate fromDate;

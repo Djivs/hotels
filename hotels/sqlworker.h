@@ -16,7 +16,7 @@ signals:
     void getGuestsReady(QStringList);
 public slots:
     void checkUser(QString login, QString pass);
-    void getFreeRooms();
+    void getFreeRooms(QDate from, QDate to);
     void getGuests();
 private:
     QSqlDatabase db;

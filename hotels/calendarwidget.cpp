@@ -12,8 +12,6 @@ CalendarWidget::CalendarWidget() {
     highlighterFormat.setBackground(this->palette().brush(QPalette::Highlight));
     highlighterFormat.setForeground(this->palette().color(QPalette::HighlightedText));
 
-    qDebug() << dateTextFormat();
-
     connect(this, &QCalendarWidget::clicked, this, [this] (const QDate &date) {
         highlightRange(QTextCharFormat());
         if ((QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) && (!fromDate.isNull())) {
@@ -23,6 +21,7 @@ CalendarWidget::CalendarWidget() {
             fromDate = date;
             toDate = QDate();
         }
+        emit rangeChanged();
     });
 }
 
@@ -32,10 +31,43 @@ void CalendarWidget::highlightRange(QTextCharFormat format) {
         auto d1 = std::max(fromDate, toDate);
 
         while (d0 <= d1) {
-            qDebug() << toDate << fromDate;
             this->setDateTextFormat(d0, format);
             d0 = d0.addDays(1);
 
         }
     }
+}
+
+void CalendarWidget::setRange(QDate from, QDate to) {
+    highlightRange(QTextCharFormat());
+    fromDate = from;
+    toDate = to;
+    highlightRange(highlighterFormat);
+}
+
+QPair<QDate, QDate> CalendarWidget::getRange() const {
+    if (fromDate.isNull() && !toDate.isNull()) {
+        return {toDate, toDate};
+    } else if (!fromDate.isNull() && toDate.isNull()) {
+        return {fromDate, fromDate};
+    } else {
+        auto d0 = std::min(fromDate, toDate);
+        auto d1 = std::max(fromDate, toDate);
+        return {d0, d1};
+    }
+}
+
+QDate CalendarWidget::getFromDate() const {
+    if (!toDate.isNull() && fromDate.isNull()) {
+        return toDate;
+    }
+
+    return fromDate;
+}
+QDate CalendarWidget::getToDate() const {
+    if (!fromDate.isNull() && toDate.isNull()) {
+        return fromDate;
+    }
+
+    return toDate;
 }

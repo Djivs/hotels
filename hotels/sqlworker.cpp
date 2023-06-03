@@ -1,6 +1,7 @@
 #include "sqlworker.h"
 #include <QDebug>
 #include <QSqlError>
+#include <QDate>
 
 SQLWorker::SQLWorker(QObject *parent)
     : QObject{parent} {
@@ -35,12 +36,20 @@ void SQLWorker::checkUser(QString login, QString password) {
     }
 }
 
-void SQLWorker::getFreeRooms() {
+void SQLWorker::getFreeRooms(QDate from, QDate to) {
     QSqlQuery query;
-    query.prepare("select * from get_free_rooms()");
+    query.prepare("select * from get_free_rooms(:from_date, :to_date)");
+
+    QString fromString = QString::number(from.year()) + '.' + QString::number(from.month()) + '.' + QString::number(from.day());
+    QString toString = QString::number(to.year()) + '.' + QString::number(to.month()) + '.' + QString::number(to.day());
+
+
+    query.bindValue(":from_date", fromString);
+    query.bindValue(":to_date", toString);
+
+    qDebug() << from << to;
 
     query.exec();
-
     QVector <QMap <QString, QVariant>> rooms;
 
     while (query.next()) {

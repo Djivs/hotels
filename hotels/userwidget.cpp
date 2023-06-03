@@ -10,7 +10,7 @@ UserWidget::UserWidget(SQLWorker *w) {
     setupUi();
     setupWorker();
 
-    emit getFreeRooms();
+    emit getFreeRooms(QDate::currentDate(), QDate::currentDate());
     emit getGuests();
 }
 
@@ -70,9 +70,26 @@ void UserWidget::setupWorker() {
 
     connect(this, &UserWidget::getGuests, worker, &SQLWorker::getGuests);
     connect(worker, &SQLWorker::getGuestsReady, this, &UserWidget::processGuests);
+
+    connect(calendar, &CalendarWidget::rangeChanged, this, [this] {emit getFreeRooms(calendar->getFromDate(), calendar->getToDate());});
+}
+
+void UserWidget::book() {
+
+    const QPair<QDate, QDate> dateRange = calendar->getRange();
+    const QString guest = guestName->text();
+    const int roomNumber = roomBox->currentText().toInt();
+
+
+    if (guest.isEmpty()) {
+        qDebug() << "fill guests name first!";
+        return;
+    }
 }
 
 void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
+    roomBox->clear();
+    freeRoomsModel->removeRows(0, freeRoomsModel->rowCount());
     freeRoomsModel->setRowCount(rooms.size());
     for (int i = 0; i < rooms.size(); ++i) {
         const auto room = rooms[i];
