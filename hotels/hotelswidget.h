@@ -4,6 +4,10 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QStandardItemModel>
+#include <QTableView>
 
 #include "sqlworker.h"
 #include "formwidget.h"
@@ -15,11 +19,20 @@ public:
     explicit HotelsWidget(SQLWorker *w, FormWidget *parent = nullptr);
     ~HotelsWidget();
 private:
-    void loadPage() {}
-    void connectWorker() {}
+    void setupWorker();
     void setupUi();
 
-    QPushButton *exitButton;
+    void loadPage();
+
+    QLineEdit *name;
+    QLineEdit *site;
+    QLineEdit *address;
+    QLineEdit *phone;
+    QStandardItemModel *roomsModel;
+    QTableView *roomsTable;
+    QPushButton *bookRoom;
+
+
 
 };
 

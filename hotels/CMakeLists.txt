@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
         hotelswidget.h hotelswidget.cpp
         formheader.h formheader.cpp
         formwidget.h formwidget.cpp
+        roomswidget.h roomswidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

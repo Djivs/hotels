@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QSizePolicy>
 #include <QHeaderView>
+#include <QDebug>
 
 FormWidget::FormWidget(QWidget *parent)
     : QWidget{parent}
@@ -17,7 +18,9 @@ void FormWidget::loadMaxInd(quint32 ind) {
     loadPage();
 }
 
-void FormWidget::connectFormHeader() {
+void FormWidget::setupFormHeader() {
+    formHeader = new FormHeader;
+
     connect(formHeader, &FormHeader::exit, this, [this] {emit exit();});
     connect(formHeader, &FormHeader::prev, this, [this] {
         if (curInd - 1) {
@@ -29,7 +32,6 @@ void FormWidget::connectFormHeader() {
         ++curInd;
         loadPage();
     });
-    connect(formHeader, &FormHeader::print, this, [this] {printPage();});
 
     connect(formHeader, &FormHeader::beginning, this, [this] {
         curInd = 1;

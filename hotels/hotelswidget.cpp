@@ -5,6 +5,10 @@
 HotelsWidget::HotelsWidget(SQLWorker *w, FormWidget *parent) :
 FormWidget{parent} {
     worker = w;
+
+    setupFormHeader();
+    setupWorker();
+
     setupUi();
 }
 
@@ -13,17 +17,54 @@ HotelsWidget::~HotelsWidget() {
 }
 
 void HotelsWidget::setupUi() {
-    exitButton = new QPushButton("Обратно");
+    formHeader->setTitle("Отели");
 
-    formHeader = new FormHeader;
+    name = new QLineEdit;
+    site = new QLineEdit;
+    address = new QLineEdit;
+    phone = new QLineEdit;
+
+    roomsModel = new QStandardItemModel;
+    roomsTable = new QTableView;
+    roomsTable->setModel(roomsModel);
+
+    bookRoom = new QPushButton("Оформить бронь");
+
+    QHBoxLayout *nameLayout = new QHBoxLayout;
+    nameLayout->addWidget(new QLabel("Название"));
+    nameLayout->addWidget(name);
+
+    QHBoxLayout *siteLayout = new QHBoxLayout;
+    siteLayout->addWidget(new QLabel("Сайт"));
+    siteLayout->addWidget(site);
+
+    QHBoxLayout *addressLayout = new QHBoxLayout;
+    addressLayout->addWidget(new QLabel("Адрес"));
+    addressLayout->addWidget(address);
+
+    QHBoxLayout *phoneLayout = new QHBoxLayout;
+    phoneLayout->addWidget(new QLabel("Телефон"));
+    phoneLayout->addWidget(phone);
 
     layout = new QVBoxLayout;
-    layout->addWidget(new QLabel("Отели"));
     layout->addWidget(formHeader);
-    layout->addWidget(exitButton);
+    layout->addLayout(nameLayout);
+    layout->addLayout(siteLayout);
+    layout->addLayout(addressLayout);
+    layout->addLayout(phoneLayout);
+    layout->addWidget(new QLabel("Комнаты"));
+    layout->addWidget(roomsTable);
+    layout->addWidget(bookRoom);
 
     setLayout(layout);
 
-    connect(exitButton, &QPushButton::clicked, this, [this] {emit exit();});
+}
+
+void HotelsWidget::setupWorker() {
+
+
+}
+
+void HotelsWidget::loadPage() {
 
 }

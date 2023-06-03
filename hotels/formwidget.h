@@ -26,11 +26,11 @@ public slots:
     void loadMaxInd(quint32 ind);
 protected:
     virtual void loadPage() = 0;
-    //virtual void setMaxInd() = 0;
-    virtual void connectWorker() = 0;
+    virtual void setupWorker() = 0;
+    virtual void setupUi() = 0;
 
 
-    void connectFormHeader();
+    void setupFormHeader();
     void printPage();
     void resizeTableView(QTableView *v);
     void showSearchError();

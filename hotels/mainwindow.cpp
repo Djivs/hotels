@@ -5,6 +5,7 @@
 #include "userwidget.h"
 #include "adminwidget.h"
 #include "hotelswidget.h"
+#include "roomswidget.h"
 
 #include <iostream>
 #include <QDebug>
@@ -44,6 +45,15 @@ void MainWindow::setupAdmin() {
         setScrollWidget(w);
 
         connect(w, &HotelsWidget::exit, this, [this] {
+            setupAdmin();
+        });
+    });
+
+    connect(w, &AdminWidget::rooms, this, [this] {
+        RoomsWidget *w = new RoomsWidget(worker);
+        setScrollWidget(w);
+
+        connect(w, &RoomsWidget::exit, this, [this] {
             setupAdmin();
         });
     });
