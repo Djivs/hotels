@@ -17,6 +17,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp mainwindow.h
         loginwidget.h loginwidget.cpp
         sqlworker.h sqlworker.cpp
+        userwidget.h userwidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -15,6 +15,8 @@ public:
 private slots:
     void processAuth(QString login);
 private:
+    void setupLogin();
+    void setScrollWidget(QWidget *w);
     SQLWorker *worker;
 };
 #endif // MAINWINDOW_H
