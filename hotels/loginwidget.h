@@ -7,7 +7,6 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-
 class LoginWidget : public QWidget
 {
     Q_OBJECT

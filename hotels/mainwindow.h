@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "sqlworker.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -10,5 +12,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+private:
+    SQLWorker *worker;
 };
 #endif // MAINWINDOW_H
