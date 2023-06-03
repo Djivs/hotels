@@ -19,3 +19,18 @@ SQLWorker::SQLWorker(QObject *parent)
     }
 
 }
+
+void SQLWorker::checkUser(QString login, QString password) {
+    QSqlQuery query;
+    query.prepare("select * from check_user(:login, :password)");
+    query.bindValue(":login", login);
+    query.bindValue(":password", password);
+
+    query.exec();
+
+    if (query.next()) {
+        emit checkUserReady(query.value(0).toBool());
+    } else {
+        qDebug() << "Can't perform query.\nError:" << query.lastError().text();
+    }
+}

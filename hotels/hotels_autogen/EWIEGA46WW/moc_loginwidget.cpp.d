@@ -1,5 +1,6 @@
 /home/dmitriy/disk/dev/hotels/hotels/hotels_autogen/EWIEGA46WW/moc_loginwidget.cpp: /home/dmitriy/disk/dev/hotels/hotels/loginwidget.h \
   /home/dmitriy/disk/dev/hotels/hotels/hotels_autogen/moc_predefs.h \
+  /home/dmitriy/disk/dev/hotels/hotels/sqlworker.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
   /usr/include/asm/errno.h \
@@ -311,6 +312,12 @@
   /usr/include/qt/QtGui/qtguiglobal.h \
   /usr/include/qt/QtGui/qtransform.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
+  /usr/include/qt/QtSql/QSqlDatabase \
+  /usr/include/qt/QtSql/QSqlQuery \
+  /usr/include/qt/QtSql/qsqldatabase.h \
+  /usr/include/qt/QtSql/qsqlquery.h \
+  /usr/include/qt/QtSql/qtsql-config.h \
+  /usr/include/qt/QtSql/qtsqlglobal.h \
   /usr/include/qt/QtWidgets/QHBoxLayout \
   /usr/include/qt/QtWidgets/QLineEdit \
   /usr/include/qt/QtWidgets/QPushButton \

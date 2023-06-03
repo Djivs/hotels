@@ -2,12 +2,19 @@
 
 #include <QLabel>
 
-LoginWidget::LoginWidget(QWidget *parent)
-    : QWidget{parent} {
+LoginWidget::LoginWidget(SQLWorker *w) {
+    worker = w;
+
+    setupUi();
+    setupWorker();
+
+}
+
+void LoginWidget::setupUi() {
     auth = new QPushButton("Войти");
 
     login = new QLineEdit;
-    pass = new QLineEdit;
+    password = new QLineEdit;
 
     loginLayout = new QHBoxLayout;
     loginLayout->addWidget(new QLabel("Логин:"));
@@ -15,7 +22,7 @@ LoginWidget::LoginWidget(QWidget *parent)
 
     passLayout = new QHBoxLayout;
     passLayout->addWidget(new QLabel("Пароль:"));
-    passLayout->addWidget(pass);
+    passLayout->addWidget(password);
 
     layout = new QVBoxLayout;
     layout->addWidget(new QLabel("АИС Отеля"));
@@ -25,5 +32,19 @@ LoginWidget::LoginWidget(QWidget *parent)
 
 
     setLayout(layout);
+}
 
+void LoginWidget::setupWorker() {
+    connect(auth, &QPushButton::clicked, this, [this] {
+        emit checkUser(login->text(), password->text());
+    });
+
+    connect(this, &LoginWidget::checkUser, worker, &SQLWorker::checkUser);
+    connect(worker, &SQLWorker::checkUserReady, this, &LoginWidget::processAuthResults);
+}
+
+void LoginWidget::processAuthResults(bool result) {
+    if (result) {
+        emit userChecked(login->text());
+    }
 }

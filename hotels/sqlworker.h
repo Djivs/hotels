@@ -11,8 +11,13 @@ class SQLWorker : public QObject
 public:
     explicit SQLWorker(QObject *parent = nullptr);
 signals:
+    void checkUserReady(bool result);
+public slots:
+    void checkUser(QString login, QString pass);
 private:
     QSqlDatabase db;
+
+
 
 };
 

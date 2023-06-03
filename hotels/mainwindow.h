@@ -12,6 +12,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+private slots:
+    void processAuth(QString login);
 private:
     SQLWorker *worker;
 };
