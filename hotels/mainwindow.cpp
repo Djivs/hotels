@@ -2,6 +2,7 @@
 
 #include "loginwidget.h"
 #include "userwidget.h"
+#include "adminwidget.h"
 
 #include <iostream>
 #include <QDebug>
@@ -30,7 +31,12 @@ void MainWindow::setupLogin() {
 
 void MainWindow::processAuth(int result) {
     if (!result) {
-        std::cout << "admin\n";
+        AdminWidget *w = new AdminWidget(worker);
+        setScrollWidget(w);
+
+        connect(w, &AdminWidget::exit, this, [this] {
+            setupLogin();
+        });
     } else {
         UserWidget *w = new UserWidget(worker, result);
         setScrollWidget(w);

@@ -19,6 +19,7 @@ set(PROJECT_SOURCES
         sqlworker.h sqlworker.cpp
         userwidget.h userwidget.cpp
         calendarwidget.h calendarwidget.cpp
+        adminwidget.h adminwidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
