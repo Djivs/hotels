@@ -9,6 +9,8 @@ GuestsWidget::GuestsWidget(SQLWorker *w)
     setupFormHeader();
     setupWorker();
     setupUi();
+
+    loadPage();
 }
 
 void GuestsWidget::setupUi() {
@@ -17,6 +19,8 @@ void GuestsWidget::setupUi() {
     phone = new QLineEdit;
 
     bookingHistoryModel = new QStandardItemModel;
+    bookingHistoryModel->setHorizontalHeaderLabels(header);
+    bookingHistoryModel->setColumnCount(header.size());
     bookingHistoryTable = new QTableView;
     bookingHistoryTable->setModel(bookingHistoryModel);
 
@@ -50,10 +54,34 @@ void GuestsWidget::setupUi() {
 }
 
 void GuestsWidget::setupWorker() {
-
+    connect(this, &GuestsWidget::getGuestData, worker, &SQLWorker::getGuestData);
+    connect(worker, &SQLWorker::getGuestDataReady, this, &GuestsWidget::processGuestData);
+    connect(this, &GuestsWidget::getGuestBookingHistory, worker, &SQLWorker::getGuestBookingHistory);
+    connect(worker, &SQLWorker::getGuestBookingHistoryReady, this, &GuestsWidget::processGuestBookingHistory);
 }
 
 void GuestsWidget::loadPage() {
+    emit getGuestData(curInd);
+    emit getGuestBookingHistory(curInd);
+}
 
+void GuestsWidget::processGuestData(QVariantMap guest) {
+    name->setText(guest["name"].toString());
+    passport->setText(guest["passport"].toString());
+    phone->setText(guest["phone"].toString());
+}
+void GuestsWidget::processGuestBookingHistory(QVector<QVariantMap> bookings) {
+    bookingHistoryModel->removeRows(0, bookingHistoryModel->rowCount());
+    bookingHistoryModel->setRowCount(bookings.size());
+
+    for (int i = 0; i < bookings.size(); ++i) {
+        const auto booking = bookings[i];
+
+        bookingHistoryModel->setData(bookingHistoryModel->index(i, 0), booking["hotel"]);
+        bookingHistoryModel->setData(bookingHistoryModel->index(i, 1), booking["number"]);
+        bookingHistoryModel->setData(bookingHistoryModel->index(i, 2), booking["kind"]);
+        bookingHistoryModel->setData(bookingHistoryModel->index(i, 3), booking["fromDate"]);
+        bookingHistoryModel->setData(bookingHistoryModel->index(i, 4), booking["toDate"]);
+    }
 }
 

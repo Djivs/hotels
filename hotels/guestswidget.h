@@ -9,10 +9,16 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
-class GuestsWidget : public FormWidget
-{
+class GuestsWidget : public FormWidget {
+    Q_OBJECT
 public:
     GuestsWidget(SQLWorker *w);
+signals:
+    void getGuestData(int);
+    void getGuestBookingHistory(int);
+private slots:
+    void processGuestData(QVariantMap);
+    void processGuestBookingHistory(QVector<QVariantMap>);
 private:
     void loadPage();
     void setupWorker();
@@ -30,6 +36,8 @@ private:
     QHBoxLayout *phoneLayout;
     QHBoxLayout *bookingHistoryLayout;
     QPushButton *save;
+
+    QStringList header = {"Название отеля", "Номер комнаты", "Вид номера", "Дата заезда", "Дата выезда"};
 
 
 };

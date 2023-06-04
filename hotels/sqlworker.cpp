@@ -209,7 +209,7 @@ void SQLWorker::getWorkerData(int id) {
 }
 void SQLWorker::getGuestData(int id) {
     QSqlQuery query;
-    query.prepare("select * from guests where id = :id");
+    query.prepare("select * from guest where id = :id");
     query.bindValue(":id", id);
 
     query.exec();
@@ -224,7 +224,7 @@ void SQLWorker::getGuestData(int id) {
 }
 void SQLWorker::getGuestBookingHistory(int id) {
     QSqlQuery query;
-    query.prepare("select * from get_guest_booking_history(:id");
+    query.prepare("select * from get_guest_booking_history(:id)");
     query.bindValue(":id", id);
 
     query.exec();
@@ -235,6 +235,7 @@ void SQLWorker::getGuestBookingHistory(int id) {
         booking["hotel"] = query.value(1);
         booking["fromDate"] = query.value(2);
         booking["toDate"] = query.value(3);
+        booking["kind"] = query.value(4);
         bookings.push_back(booking);
     }
 
