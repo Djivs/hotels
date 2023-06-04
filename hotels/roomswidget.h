@@ -9,11 +9,21 @@
 #include <QGroupBox>
 #include <QSpinBox>
 #include <QRadioButton>
+#include <QHBoxLayout>
 
 class RoomsWidget : public FormWidget
 {
+    Q_OBJECT
 public:
     RoomsWidget(SQLWorker *w);
+signals:
+    void getRoomData(int);
+    void getKinds();
+    void getHotels();
+private slots:
+    void processRoomData(QVariantMap room);
+    void processKinds(QStringList kinds);
+    void processHotels(QStringList hotels);
 private:
     void loadPage();
     void setupWorker();
@@ -24,7 +34,14 @@ private:
     QLineEdit *cost;
     QCheckBox *availability;
     QGroupBox *kindBox;
+    QPushButton *save;
     QVector <QRadioButton *> kindButtons;
+
+    QHBoxLayout *hotelLayout;
+    QHBoxLayout *kindLayout;
+    QHBoxLayout *numberLayout;
+    QHBoxLayout *costLayout;
+    QHBoxLayout *availabilityLayout;
 
 };
 

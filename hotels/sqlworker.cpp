@@ -101,7 +101,7 @@ void SQLWorker::book(int guestId, int roomNumber, QDate fromDate, QDate toDate) 
 
 void SQLWorker::getHotels() {
     QSqlQuery query;
-    query.prepare("select name from hotels");
+    query.prepare("select name from hotel");
 
     query.exec();
 
@@ -418,5 +418,20 @@ void SQLWorker::insertGuest(QVariantMap guest) {
     query.bindValue(":id", guest["id"]);
 
     query.exec();
+}
+
+void SQLWorker::getKinds() {
+    QSqlQuery query;
+    query.prepare("select kind from kinds_of_room");
+
+    query.exec();
+
+    QStringList kinds;
+
+    while(query.next()) {
+        kinds << query.value(0).toString();
+    }
+
+    emit getKindsReady(kinds);
 }
 

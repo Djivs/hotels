@@ -16,6 +16,7 @@ signals:
     void getGuestsReady(QStringList);
     void getGuestReady(QString);
     void getHotelsReady(QStringList);
+    void getKindsReady(QStringList);
     void getHotelRoomsDataReady(QVector <QVariantMap>);
     void getHotelProfitByRoomsReady(QVariantMap);
     void getRoomDataReady(QVariantMap);
@@ -30,6 +31,7 @@ public slots:
     void getFreeRooms(QDate from, QDate to);
     void getGuests();
     void getHotels();
+    void getKinds();
     void getGuest(int id);
     void getHotelData(int id);
     void getHotelRoomsData(int id);
