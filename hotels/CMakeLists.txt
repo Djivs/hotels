@@ -24,6 +24,10 @@ set(PROJECT_SOURCES
         formheader.h formheader.cpp
         formwidget.h formwidget.cpp
         roomswidget.h roomswidget.cpp
+        workerswidget.h workerswidget.cpp
+        guestswidget.h guestswidget.cpp
+        freeroomswidget.h freeroomswidget.cpp
+        totalprofitwidget.h totalprofitwidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
