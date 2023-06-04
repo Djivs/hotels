@@ -6,7 +6,11 @@
 class FreeRoomsWidget : public FormWidget
 {
 public:
-    FreeRoomsWidget();
+    FreeRoomsWidget(SQLWorker *w);
+private:
+    void loadPage();
+    void setupWorker();
+    void setupUi();
 };
 
 #endif // FREEROOMSWIDGET_H

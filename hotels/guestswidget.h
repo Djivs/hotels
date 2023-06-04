@@ -6,7 +6,11 @@
 class GuestsWidget : public FormWidget
 {
 public:
-    GuestsWidget();
+    GuestsWidget(SQLWorker *w);
+private:
+    void loadPage();
+    void setupWorker();
+    void setupUi();
 };
 
 #endif // GUESTSWIDGET_H

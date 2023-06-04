@@ -6,6 +6,11 @@
 #include "adminwidget.h"
 #include "hotelswidget.h"
 #include "roomswidget.h"
+#include "workerswidget.h"
+#include "guestswidget.h"
+#include "freeroomswidget.h"
+#include "totalprofitwidget.h"
+
 
 #include <iostream>
 #include <QDebug>
@@ -51,6 +56,42 @@ void MainWindow::setupAdmin() {
 
     connect(w, &AdminWidget::rooms, this, [this] {
         RoomsWidget *w = new RoomsWidget(worker);
+        setScrollWidget(w);
+
+        connect(w, &RoomsWidget::exit, this, [this] {
+            setupAdmin();
+        });
+    });
+
+    connect(w, &AdminWidget::guests, this, [this] {
+        GuestsWidget *w = new GuestsWidget(worker);
+        setScrollWidget(w);
+
+        connect(w, &GuestsWidget::exit, this, [this] {
+            setupAdmin();
+        });
+    });
+
+    connect(w, &AdminWidget::workers, this, [this] {
+        WorkersWidget *w = new WorkersWidget(worker);
+        setScrollWidget(w);
+
+        connect(w, &WorkersWidget::exit, this, [this] {
+            setupAdmin();
+        });
+    });
+
+    connect(w, &AdminWidget::freeRooms, this, [this] {
+        FreeRoomsWidget *w = new FreeRoomsWidget(worker);
+        setScrollWidget(w);
+
+        connect(w, &FreeRoomsWidget::exit, this, [this] {
+            setupAdmin();
+        });
+    });
+
+    connect(w, &AdminWidget::totalProfit, this, [this] {
+        TotalProfitWidget *w = new TotalProfitWidget(worker);
         setScrollWidget(w);
 
         connect(w, &RoomsWidget::exit, this, [this] {

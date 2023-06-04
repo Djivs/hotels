@@ -6,7 +6,11 @@
 class WorkersWidget : public FormWidget
 {
 public:
-    WorkersWidget();
+    WorkersWidget(SQLWorker *w);
+private:
+    void loadPage();
+    void setupWorker();
+    void setupUi();
 };
 
 #endif // WORKERSWIDGET_H

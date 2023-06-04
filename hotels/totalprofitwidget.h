@@ -6,7 +6,11 @@
 class TotalProfitWidget : public FormWidget
 {
 public:
-    TotalProfitWidget();
+    TotalProfitWidget(SQLWorker *w);
+private:
+    void loadPage();
+    void setupWorker();
+    void setupUi();
 };
 
 #endif // TOTALPROFITWIDGET_H
