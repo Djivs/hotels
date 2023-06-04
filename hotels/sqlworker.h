@@ -25,6 +25,7 @@ signals:
     void getGuestDataReady(QVariantMap);
     void getGuestBookingHistoryReady(QVector <QVariantMap>);
     void getOverallHotelsProfitsReady(QVariantMap);
+    void getWorkersReady(QVector <QVariantMap>);
 public slots:
     void book(int guestId, int roomNumber, QDate fromDate, QDate toDate);
     void checkUser(QString login, QString pass);
@@ -32,6 +33,7 @@ public slots:
     void getGuests();
     void getHotels();
     void getKinds();
+    void getWorkers();
     void getGuest(int id);
     void getHotelData(int id);
     void getHotelRoomsData(int id);

@@ -435,3 +435,23 @@ void SQLWorker::getKinds() {
     emit getKindsReady(kinds);
 }
 
+void SQLWorker::getWorkers() {
+    QSqlQuery query;
+    query.prepare("select * from all_workers_data()");
+
+    query.exec();
+
+    qDebug() << query.lastQuery();
+    qDebug() << query.lastError();
+
+    QVector <QVariantMap> workers;
+    while (query.next()) {
+        QVariantMap worker;
+        worker["hotel"] = query.value(0);
+        worker["name"] = query.value(1);
+        worker["position"] = query.value(2);
+        workers.push_back(worker);
+    }
+
+    emit getWorkersReady(workers);
+}

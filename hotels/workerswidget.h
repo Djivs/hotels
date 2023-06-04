@@ -7,10 +7,16 @@
 
 #include "formwidget.h"
 
-class WorkersWidget : public FormWidget
-{
+class WorkersWidget : public FormWidget {
+    Q_OBJECT
 public:
     WorkersWidget(SQLWorker *w);
+signals:
+    void getHotels();
+    void getWorkers();
+private slots:
+    void processHotels(QStringList hotels);
+    void processWorkersData(QVector<QVariantMap>);
 private:
     void loadPage();
     void setupWorker();
@@ -22,6 +28,7 @@ private:
     QPushButton *leave;
 
     QStringList header = {"Отель", "ФИО Работника", "Должность"};
+    QStringList hotels;
 };
 
 #endif // WORKERSWIDGET_H

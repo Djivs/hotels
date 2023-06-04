@@ -7,5 +7,7 @@
 #include "EWIEGA46WW/moc_hotelswidget.cpp"
 #include "EWIEGA46WW/moc_loginwidget.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
+#include "EWIEGA46WW/moc_roomswidget.cpp"
 #include "EWIEGA46WW/moc_sqlworker.cpp"
 #include "EWIEGA46WW/moc_userwidget.cpp"
+#include "EWIEGA46WW/moc_workerswidget.cpp"

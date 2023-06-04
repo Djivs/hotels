@@ -3,6 +3,7 @@
 #include "comboboxitemdelegate.h"
 
 #include <QLabel>
+#include <QComboBox>
 
 WorkersWidget::WorkersWidget(SQLWorker *w)
 {
@@ -10,6 +11,8 @@ WorkersWidget::WorkersWidget(SQLWorker *w)
 
     setupWorker();
     setupUi();
+
+    loadPage();
 }
 
 void WorkersWidget::setupUi() {
@@ -38,9 +41,41 @@ void WorkersWidget::setupUi() {
 }
 
 void WorkersWidget::setupWorker() {
-
+    connect(this, &WorkersWidget::getHotels, worker, &SQLWorker::getHotels);
+    connect(worker, &SQLWorker::getHotelsReady, this, &WorkersWidget::processHotels);
+    connect(this, &WorkersWidget::getWorkers, worker, &SQLWorker::getWorkers);
+    connect(worker, &SQLWorker::getWorkersReady, this, &WorkersWidget::processWorkersData);
 }
 
 void WorkersWidget::loadPage() {
+    emit getHotels();
+    emit getWorkers();
+}
+
+void WorkersWidget::processHotels(QStringList _hotels) {
+    hotels = _hotels;
+}
+void WorkersWidget::processWorkersData(QVector<QVariantMap> workers) {
+    model->removeRows(0, model->rowCount());
+    model->setRowCount(workers.size());
+
+    for (int i = 0; i < workers.size(); ++i) {
+        QComboBox *box = new QComboBox;
+        for (auto &i : hotels) {
+            box->addItem(i);
+        }
+
+        for (int j = 0; j < box->count(); ++j) {
+            if (box->itemText(j) == workers[i]["hotel"].toString()) {
+                qDebug() << j;
+                box->setCurrentIndex(j);
+                break;
+            }
+        }
+
+        table->setIndexWidget(model->index(i, 0), box);
+        model->setData(model->index(i, 1), workers[i]["name"].toString());
+        model->setData(model->index(i, 2), workers[i]["position"].toString());
+    }
 
 }
