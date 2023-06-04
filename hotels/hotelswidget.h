@@ -31,6 +31,7 @@ private:
     QStandardItemModel *roomsModel;
     QTableView *roomsTable;
     QPushButton *bookRoom;
+    QPushButton *save;
 
 
 

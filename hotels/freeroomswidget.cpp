@@ -1,19 +1,37 @@
 #include "freeroomswidget.h"
 
+#include <QLabel>
+
 FreeRoomsWidget::FreeRoomsWidget(SQLWorker *w)
 {
     worker = w;
 
-    setupFormHeader();
     setupWorker();
     setupUi();
 }
 
 void FreeRoomsWidget::setupUi() {
-    layout = new QVBoxLayout;
-    layout->addWidget(formHeader);
+    searchHotel = new QLineEdit;
 
+    roomsModel = new QStandardItemModel;
+    roomsTable = new QTableView;
+    roomsTable->setModel(roomsModel);
+
+    save = new QPushButton("Сохранить");
+    leave = new QPushButton("Обратно");
+
+    searchLayout = new QHBoxLayout;
+    searchLayout->addWidget(new QLabel("Поиск по названию отеля"));
+
+
+    layout = new QVBoxLayout;
+    layout->addLayout(searchLayout);
+    layout->addWidget(roomsTable);
+    layout->addWidget(save);
+    layout->addWidget(leave);
     setLayout(layout);
+
+    connect(leave, &QPushButton::clicked, this, [this] {emit exit();});
 }
 
 void FreeRoomsWidget::setupWorker() {

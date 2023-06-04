@@ -19,6 +19,7 @@ private:
     QStandardItemModel *model;
     QTableView *table;
     QPushButton *save;
+    QPushButton *leave;
 
     QStringList header = {"Отель", "ФИО Работника", "Должность"};
 };

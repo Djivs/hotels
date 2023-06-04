@@ -29,6 +29,7 @@ void HotelsWidget::setupUi() {
     roomsTable->setModel(roomsModel);
 
     bookRoom = new QPushButton("Оформить бронь");
+    save = new QPushButton("Сохранить");
 
     QHBoxLayout *nameLayout = new QHBoxLayout;
     nameLayout->addWidget(new QLabel("Название"));
@@ -55,6 +56,7 @@ void HotelsWidget::setupUi() {
     layout->addWidget(new QLabel("Комнаты"));
     layout->addWidget(roomsTable);
     layout->addWidget(bookRoom);
+    layout->addWidget(save);
 
     setLayout(layout);
 

@@ -24,13 +24,17 @@ void WorkersWidget::setupUi() {
     model->setHorizontalHeaderLabels(header);
 
     save = new QPushButton("Сохранить изменения");
+    leave = new QPushButton("Обратно");
 
     layout = new QVBoxLayout;
     layout->addWidget(new QLabel("Работники"));
     layout->addWidget(table);
     layout->addWidget(save);
+    layout->addWidget(leave);
 
     setLayout(layout);
+
+    connect(leave, &QPushButton::clicked, this, [this] {emit exit();});
 }
 
 void WorkersWidget::setupWorker() {

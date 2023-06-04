@@ -1,4 +1,4 @@
-/home/dmitriy/disk/dev/hotels/hotels/hotels_autogen/EWIEGA46WW/moc_guestregisterdialog.cpp: /home/dmitriy/disk/dev/hotels/hotels/guestregisterdialog.h \
+/home/dmitriy/disk/dev/hotels/hotels/hotels_autogen/EWIEGA46WW/moc_comboboxitemdelegate.cpp: /home/dmitriy/disk/dev/hotels/hotels/comboboxitemdelegate.h \
   /home/dmitriy/disk/dev/hotels/hotels/hotels_autogen/moc_predefs.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -226,7 +226,7 @@
   /usr/include/linux/errno.h \
   /usr/include/locale.h \
   /usr/include/pthread.h \
-  /usr/include/qt/QtCore/QObject \
+  /usr/include/qt/QtCore/qabstractitemmodel.h \
   /usr/include/qt/QtCore/qalgorithms.h \
   /usr/include/qt/QtCore/qarraydata.h \
   /usr/include/qt/QtCore/qatomic.h \
@@ -250,6 +250,7 @@
   /usr/include/qt/QtCore/qiterator.h \
   /usr/include/qt/QtCore/qline.h \
   /usr/include/qt/QtCore/qlist.h \
+  /usr/include/qt/QtCore/qlocale.h \
   /usr/include/qt/QtCore/qlogging.h \
   /usr/include/qt/QtCore/qmap.h \
   /usr/include/qt/QtCore/qmargins.h \
@@ -266,6 +267,7 @@
   /usr/include/qt/QtCore/qrect.h \
   /usr/include/qt/QtCore/qrefcount.h \
   /usr/include/qt/QtCore/qregexp.h \
+  /usr/include/qt/QtCore/qregularexpression.h \
   /usr/include/qt/QtCore/qscopedpointer.h \
   /usr/include/qt/QtCore/qshareddata.h \
   /usr/include/qt/QtCore/qsharedpointer.h \
@@ -291,40 +293,36 @@
   /usr/include/qt/QtGui/qfont.h \
   /usr/include/qt/QtGui/qfontinfo.h \
   /usr/include/qt/QtGui/qfontmetrics.h \
+  /usr/include/qt/QtGui/qicon.h \
   /usr/include/qt/QtGui/qimage.h \
   /usr/include/qt/QtGui/qkeysequence.h \
   /usr/include/qt/QtGui/qmatrix.h \
   /usr/include/qt/QtGui/qpaintdevice.h \
   /usr/include/qt/QtGui/qpalette.h \
-  /usr/include/qt/QtGui/qpen.h \
   /usr/include/qt/QtGui/qpixelformat.h \
   /usr/include/qt/QtGui/qpixmap.h \
   /usr/include/qt/QtGui/qpolygon.h \
   /usr/include/qt/QtGui/qregion.h \
   /usr/include/qt/QtGui/qrgb.h \
   /usr/include/qt/QtGui/qrgba64.h \
-  /usr/include/qt/QtGui/qtextcursor.h \
-  /usr/include/qt/QtGui/qtextformat.h \
-  /usr/include/qt/QtGui/qtextoption.h \
   /usr/include/qt/QtGui/qtgui-config.h \
   /usr/include/qt/QtGui/qtguiglobal.h \
   /usr/include/qt/QtGui/qtransform.h \
+  /usr/include/qt/QtGui/qvalidator.h \
   /usr/include/qt/QtGui/qwindowdefs.h \
-  /usr/include/qt/QtWidgets/QDialog \
-  /usr/include/qt/QtWidgets/QDialogButtonBox \
-  /usr/include/qt/QtWidgets/QHBoxLayout \
-  /usr/include/qt/QtWidgets/QLineEdit \
-  /usr/include/qt/QtWidgets/QVBoxLayout \
-  /usr/include/qt/QtWidgets/QWidget \
-  /usr/include/qt/QtWidgets/qboxlayout.h \
-  /usr/include/qt/QtWidgets/qdialog.h \
-  /usr/include/qt/QtWidgets/qdialogbuttonbox.h \
+  /usr/include/qt/QtWidgets/QStyledItemDelegate \
+  /usr/include/qt/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/qt/QtWidgets/qabstractslider.h \
+  /usr/include/qt/QtWidgets/qabstractspinbox.h \
   /usr/include/qt/QtWidgets/qframe.h \
-  /usr/include/qt/QtWidgets/qgridlayout.h \
-  /usr/include/qt/QtWidgets/qlayout.h \
-  /usr/include/qt/QtWidgets/qlayoutitem.h \
-  /usr/include/qt/QtWidgets/qlineedit.h \
+  /usr/include/qt/QtWidgets/qrubberband.h \
   /usr/include/qt/QtWidgets/qsizepolicy.h \
+  /usr/include/qt/QtWidgets/qslider.h \
+  /usr/include/qt/QtWidgets/qstyle.h \
+  /usr/include/qt/QtWidgets/qstyleditemdelegate.h \
+  /usr/include/qt/QtWidgets/qstyleoption.h \
+  /usr/include/qt/QtWidgets/qtabbar.h \
+  /usr/include/qt/QtWidgets/qtabwidget.h \
   /usr/include/qt/QtWidgets/qtwidgets-config.h \
   /usr/include/qt/QtWidgets/qtwidgetsglobal.h \
   /usr/include/qt/QtWidgets/qwidget.h \
