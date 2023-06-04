@@ -18,6 +18,12 @@ class HotelsWidget : public FormWidget
 public:
     explicit HotelsWidget(SQLWorker *w, FormWidget *parent = nullptr);
     ~HotelsWidget();
+signals:
+    void getHotelData(int);
+    void getHotelRooms(int);
+private slots:
+    void processHotelData(QMap <QString, QVariant> hotel);
+    void processHotelRooms(QVector <QMap <QString, QVariant>> rooms);
 private:
     void setupWorker();
     void setupUi();
@@ -33,7 +39,7 @@ private:
     QPushButton *bookRoom;
     QPushButton *save;
 
-
+    QStringList header = {"Вид номера", "Номер комнаты", "Стоимость", "Доступность"};
 
 };
 

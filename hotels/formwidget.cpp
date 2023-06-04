@@ -12,12 +12,6 @@ FormWidget::FormWidget(QWidget *parent)
 
 
 }
-
-void FormWidget::loadMaxInd(quint32 ind) {
-    curInd = ind;
-    loadPage();
-}
-
 void FormWidget::setupFormHeader() {
     formHeader = new FormHeader;
 
@@ -31,15 +25,6 @@ void FormWidget::setupFormHeader() {
     connect(formHeader, &FormHeader::next, this, [this] {
         ++curInd;
         loadPage();
-    });
-
-    connect(formHeader, &FormHeader::beginning, this, [this] {
-        curInd = 1;
-        loadPage();
-    });
-
-    connect(formHeader, &FormHeader::ending, this, [this] {
-        emit setMaxInd();
     });
 }
 

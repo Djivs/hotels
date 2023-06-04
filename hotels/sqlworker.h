@@ -15,12 +15,38 @@ signals:
     void getFreeRoomsReady(QVector <QMap <QString, QVariant>>);
     void getGuestsReady(QStringList);
     void getGuestReady(QString);
+    void getHotelsReady(QStringList);
+    void getHotelRoomsDataReady(QVector <QVariantMap>);
+    void getHotelProfitByRoomsReady(QVariantMap);
+    void getRoomDataReady(QVariantMap);
+    void getWorkerDataReady(QVariantMap);
+    void getHotelDataReady(QVariantMap);
+    void getGuestDataReady(QVariantMap);
+    void getGuestBookingHistoryReady(QVector <QVariantMap>);
+    void getOverallHotelsProfitsReady(QVariantMap);
 public slots:
     void book(int guestId, int roomNumber, QDate fromDate, QDate toDate);
     void checkUser(QString login, QString pass);
     void getFreeRooms(QDate from, QDate to);
     void getGuests();
+    void getHotels();
     void getGuest(int id);
+    void getHotelData(int id);
+    void getHotelRoomsData(int id);
+    void getHotelProfitByRooms(int id);
+    void getRoomData(int id);
+    void getWorkerData(int id);
+    void getGuestData(int id);
+    void getGuestBookingHistory(int id);
+    void getOverallHotelsProfits();
+    void updateHotel(QVariantMap hotel);
+    void insertHotel(QVariantMap hotel);
+    void updateRoom(QVariantMap room);
+    void insertRoom(QVariantMap room);
+    void updateWorker(QVariantMap worker);
+    void insertWorker(QVariantMap worker);
+    void updateGuest(QVariantMap guest);
+    void insertGuest(QVariantMap guest);
 private:
     QSqlDatabase db;
 

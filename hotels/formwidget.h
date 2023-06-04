@@ -22,8 +22,6 @@ class FormWidget : public QWidget
     Q_OBJECT
 public:
     explicit FormWidget(QWidget *parent = nullptr);
-public slots:
-    void loadMaxInd(quint32 ind);
 protected:
     virtual void loadPage() = 0;
     virtual void setupWorker() = 0;

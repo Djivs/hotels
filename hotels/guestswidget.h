@@ -30,6 +30,8 @@ private:
     QHBoxLayout *phoneLayout;
     QHBoxLayout *bookingHistoryLayout;
     QPushButton *save;
+
+
 };
 
 #endif // GUESTSWIDGET_H

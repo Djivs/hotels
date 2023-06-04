@@ -10,6 +10,8 @@ FormWidget{parent} {
     setupWorker();
 
     setupUi();
+
+    loadPage();
 }
 
 HotelsWidget::~HotelsWidget() {
@@ -25,6 +27,8 @@ void HotelsWidget::setupUi() {
     phone = new QLineEdit;
 
     roomsModel = new QStandardItemModel;
+    roomsModel->setColumnCount(header.size());
+    roomsModel->setHorizontalHeaderLabels(header);
     roomsTable = new QTableView;
     roomsTable->setModel(roomsModel);
 
@@ -59,14 +63,38 @@ void HotelsWidget::setupUi() {
     layout->addWidget(save);
 
     setLayout(layout);
-
 }
 
 void HotelsWidget::setupWorker() {
-
+    connect(this, &HotelsWidget::getHotelData, worker, &SQLWorker::getHotelData);
+    connect(worker, &SQLWorker::getHotelDataReady, this, &HotelsWidget::processHotelData);
+    connect(this, &HotelsWidget::getHotelRooms, worker, &SQLWorker::getHotelRoomsData);
+    connect(worker, &SQLWorker::getHotelRoomsDataReady, this, &HotelsWidget::processHotelRooms);
 
 }
 
 void HotelsWidget::loadPage() {
+    emit getHotelData(curInd);
+    emit getHotelRooms(curInd);
+}
 
+void HotelsWidget::processHotelData(QMap <QString, QVariant> hotel) {
+    name->setText(hotel["name"].toString());
+    site->setText(hotel["site"].toString());
+    address->setText(hotel["address"].toString());
+    phone->setText(hotel["phone"].toString());
+}
+void HotelsWidget::processHotelRooms(QVector <QMap <QString, QVariant>> rooms) {
+    roomsModel->removeRows(0, roomsModel->rowCount());
+
+    roomsModel->setRowCount(rooms.size());
+
+    for (int i = 0; i < rooms.size(); ++i) {
+        roomsModel->setData(roomsModel->index(i, 0), rooms[i]["kind"]);
+        roomsModel->setData(roomsModel->index(i, 1), rooms[i]["number"]);
+        roomsModel->setData(roomsModel->index(i, 2), rooms[i]["cost"]);
+        roomsModel->setData(roomsModel->index(i, 3), rooms[i]["availability"]);
+    }
+    roomsTable->show();
+    roomsTable->update();
 }

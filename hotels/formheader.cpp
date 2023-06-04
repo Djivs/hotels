@@ -6,19 +6,14 @@ FormHeader::FormHeader(QWidget *parent) :
     prevButton = new QPushButton(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft), "");
     nextButton = new QPushButton(QApplication::style()->standardIcon(QStyle::SP_ArrowRight), "");
     printButton = new QPushButton(QApplication::style()->standardIcon(QStyle::SP_ComputerIcon), "");
-    beginningButton = new QPushButton(QApplication::style()->standardIcon(QStyle::SP_MediaSeekBackward), "");
-    endingButton = new QPushButton(QApplication::style()->standardIcon(QStyle::SP_MediaSeekForward), "");
-
 
     titleLabel = new QLabel("");
     titleLabel->setFont(QFont("Consolas", 15, QFont::Bold));
 
     buttonsLayout = new QHBoxLayout;
     buttonsLayout->addWidget(exitButton);
-    buttonsLayout->addWidget(beginningButton);
     buttonsLayout->addWidget(prevButton);
     buttonsLayout->addWidget(nextButton);
-    buttonsLayout->addWidget(endingButton);
     buttonsLayout->addWidget(printButton);
 
     mainLayout = new QVBoxLayout(this);
@@ -30,8 +25,6 @@ FormHeader::FormHeader(QWidget *parent) :
     connect(prevButton, &QPushButton::clicked, this, [this] {emit prev();});
     connect(nextButton, &QPushButton::clicked, this, [this] {emit next();});
     connect(printButton, &QPushButton::clicked, this, [this] {emit print();});
-    connect(beginningButton, &QPushButton::clicked, this, [this] {emit beginning();});
-    connect(endingButton, &QPushButton::clicked, this, [this] {emit ending();});
 
 }
 
