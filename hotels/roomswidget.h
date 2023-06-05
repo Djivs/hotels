@@ -20,14 +20,21 @@ signals:
     void getRoomData(int);
     void getKinds();
     void getHotels();
+
+    void updateRoom(QVariantMap);
+    void insertRoom(QVariantMap);
 private slots:
     void processRoomData(QVariantMap room);
     void processKinds(QStringList kinds);
     void processHotels(QStringList hotels);
+
+    void saveRoom();
 private:
     void loadPage();
     void setupWorker();
     void setupUi();
+
+    QVariantMap getCurrentRoomMap();
 
     QComboBox *hotelBox;
     QSpinBox *roomNumberBox;
@@ -42,6 +49,8 @@ private:
     QHBoxLayout *numberLayout;
     QHBoxLayout *costLayout;
     QHBoxLayout *availabilityLayout;
+
+    bool isOutside = false;
 
 };
 

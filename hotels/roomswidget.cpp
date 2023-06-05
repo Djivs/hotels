@@ -25,6 +25,9 @@ void RoomsWidget::setupWorker() {
     connect(worker, &SQLWorker::getHotelsReady, this, &RoomsWidget::processHotels);
     connect(this, &RoomsWidget::getRoomData, worker, &SQLWorker::getRoomData);
     connect(worker, &SQLWorker::getRoomDataReady, this, &RoomsWidget::processRoomData);
+
+    connect(this, &RoomsWidget::updateRoom, worker, &SQLWorker::updateRoom);
+    connect(this, &RoomsWidget::insertRoom, worker, &SQLWorker::insertRoom);
 }
 
 void RoomsWidget::setupUi() {
@@ -70,6 +73,8 @@ void RoomsWidget::setupUi() {
 }
 
 void RoomsWidget::processRoomData(QVariantMap room) {
+    isOutside = room.isEmpty();
+
     const auto hotelName = room["hotel"].toString();
     const auto kindName = room["kind"].toString();
     const auto roomNumber = room["number"].toInt();
@@ -120,4 +125,33 @@ void RoomsWidget::processHotels(QStringList hotels) {
     for (auto &i : hotels) {
         hotelBox->addItem(i);
     }
+}
+
+void RoomsWidget::saveRoom() {
+    if (isOutside) {
+        emit insertRoom(getCurrentRoomMap());
+    } else {
+        emit updateRoom(getCurrentRoomMap());
+    }
+}
+
+QVariantMap RoomsWidget::getCurrentRoomMap() {
+    QVariantMap room;
+
+    room["id"] = curInd;
+    room["hotel"] = hotelBox->currentText();
+    room["number"] = roomNumberBox->value();
+    room["cost"] = cost->text();
+    room["availability"] = availability->isChecked();
+
+    QString kind;
+    for (int i = 0; i < kindButtons.size(); ++i) {
+        if (kindButtons[i]->isChecked()) {
+            kind = kindButtons[i]->text();
+            break;
+        }
+    }
+    room["kind"] = kind;
+
+    return room;
 }

@@ -4,6 +4,8 @@
 #include "EWIEGA46WW/moc_comboboxitemdelegate.cpp"
 #include "EWIEGA46WW/moc_formheader.cpp"
 #include "EWIEGA46WW/moc_formwidget.cpp"
+#include "EWIEGA46WW/moc_freeroomswidget.cpp"
+#include "EWIEGA46WW/moc_guestswidget.cpp"
 #include "EWIEGA46WW/moc_hotelswidget.cpp"
 #include "EWIEGA46WW/moc_loginwidget.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"

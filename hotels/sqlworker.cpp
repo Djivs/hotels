@@ -9,7 +9,7 @@ SQLWorker::SQLWorker(QObject *parent)
 
     db = QSqlDatabase::addDatabase("QPSQL");
     db.setHostName("127.0.0.1");
-    db.setDatabaseName("hotel");
+    db.setDatabaseName("hotels");
     db.setUserName("postgres");
     db.setPassword("123");
 
@@ -48,10 +48,10 @@ void SQLWorker::getFreeRooms(QDate from, QDate to) {
 
     while (query.next()) {
         QMap <QString, QVariant> map;
-        map["hotel_name"] = query.value(0);
+        map["hotel"] = query.value(0);
         map["kind"] = query.value(1);
         map["number"] = query.value(2);
-        map["price"] = query.value(3);
+        map["cost"] = query.value(3);
         rooms.push_back(map);
     }
 

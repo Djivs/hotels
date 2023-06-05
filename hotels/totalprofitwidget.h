@@ -5,8 +5,6 @@
 #include <QPushButton>
 #include <QChartView>
 
-using QtCharts::QChart, QtCharts::QChartView;
-
 class TotalProfitWidget : public FormWidget
 {
 public:

@@ -21,14 +21,19 @@ public:
 signals:
     void getHotelData(int);
     void getHotelRooms(int);
+
+    void updateHotel(QVariantMap);
+    void insertHotel(QVariantMap);
 private slots:
     void processHotelData(QMap <QString, QVariant> hotel);
     void processHotelRooms(QVector <QMap <QString, QVariant>> rooms);
+    void saveHotel();
 private:
     void setupWorker();
     void setupUi();
-
     void loadPage();
+
+    QVariantMap getCurrentHotelMap();
 
     QLineEdit *name;
     QLineEdit *site;
@@ -40,6 +45,8 @@ private:
     QPushButton *save;
 
     QStringList header = {"Вид номера", "Номер комнаты", "Стоимость", "Доступность"};
+
+    bool isOutside = false;
 
 };
 

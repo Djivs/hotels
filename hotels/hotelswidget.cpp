@@ -35,6 +35,8 @@ void HotelsWidget::setupUi() {
     bookRoom = new QPushButton("Оформить бронь");
     save = new QPushButton("Сохранить");
 
+    connect(save, &QPushButton::clicked,this, &HotelsWidget::saveHotel);
+
     QHBoxLayout *nameLayout = new QHBoxLayout;
     nameLayout->addWidget(new QLabel("Название"));
     nameLayout->addWidget(name);
@@ -71,6 +73,9 @@ void HotelsWidget::setupWorker() {
     connect(this, &HotelsWidget::getHotelRooms, worker, &SQLWorker::getHotelRoomsData);
     connect(worker, &SQLWorker::getHotelRoomsDataReady, this, &HotelsWidget::processHotelRooms);
 
+    connect(this, &HotelsWidget::updateHotel, worker, &SQLWorker::updateHotel);
+    connect(this, &HotelsWidget::insertHotel, worker, &SQLWorker::insertHotel);
+
 }
 
 void HotelsWidget::loadPage() {
@@ -79,6 +84,8 @@ void HotelsWidget::loadPage() {
 }
 
 void HotelsWidget::processHotelData(QMap <QString, QVariant> hotel) {
+    isOutside = hotel.isEmpty();
+
     name->setText(hotel["name"].toString());
     site->setText(hotel["site"].toString());
     address->setText(hotel["address"].toString());
@@ -97,4 +104,25 @@ void HotelsWidget::processHotelRooms(QVector <QMap <QString, QVariant>> rooms) {
     }
     roomsTable->show();
     roomsTable->update();
+}
+
+void HotelsWidget::saveHotel() {
+    const QVariantMap hotel = getCurrentHotelMap();
+    if (isOutside) {
+        emit insertHotel(hotel);
+    } else {
+        emit updateHotel(hotel);
+    }
+}
+
+QVariantMap HotelsWidget::getCurrentHotelMap() {
+    QVariantMap hotel;
+
+    hotel["name"] = name->text();
+    hotel["site"] = site->text();
+    hotel["address"] = address->text();
+    hotel["phone"] = phone->text();
+    hotel["id"] = curInd;
+
+    return hotel;
 }
