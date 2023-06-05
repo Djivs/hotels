@@ -16,13 +16,18 @@ public:
 signals:
     void getGuestData(int);
     void getGuestBookingHistory(int);
+    void updateGuest(QVariantMap);
+    void insertGuest(QVariantMap);
 private slots:
     void processGuestData(QVariantMap);
     void processGuestBookingHistory(QVector<QVariantMap>);
+    void saveGuest();
 private:
     void loadPage();
     void setupWorker();
     void setupUi();
+
+    QVariantMap currentGuestMap();
 
     QLineEdit *name;
     QLineEdit *passport;
@@ -37,7 +42,10 @@ private:
     QHBoxLayout *bookingHistoryLayout;
     QPushButton *save;
 
+    bool isOutside = false;
+
     QStringList header = {"Название отеля", "Номер комнаты", "Вид номера", "Дата заезда", "Дата выезда"};
+
 
 
 };

@@ -7,22 +7,21 @@
 #include <QDebug>
 
 FormWidget::FormWidget(QWidget *parent)
-    : QWidget{parent}
-{
+    : QWidget{parent} {
 
 
 }
 void FormWidget::setupFormHeader() {
     formHeader = new FormHeader;
 
-    connect(formHeader, &FormHeader::exit, this, [this] {emit exit();});
-    connect(formHeader, &FormHeader::prev, this, [this] {
+    connect(formHeader, &FormHeader::exit, this, [this] () {emit exit();});
+    connect(formHeader, &FormHeader::prev, this, [this] () {
         if (curInd - 1) {
             --curInd;
             loadPage();
         }
     });
-    connect(formHeader, &FormHeader::next, this, [this] {
+    connect(formHeader, &FormHeader::next, this, [this] () {
         ++curInd;
         loadPage();
     });
@@ -37,10 +36,10 @@ void FormWidget::printPage() {
     QPainter painter(&printer);
 
 
-    double xscale = printer.pageRect().width() / double(this->width());
-    double yscale = printer.pageRect().height() / double(this->height());
+    double xscale = printer.pageRect(QPrinter::DevicePixel).width() / double(this->width());
+    double yscale = printer.pageRect(QPrinter::DevicePixel).height() / double(this->height());
     double scale = qMin(xscale, yscale);
-    painter.translate(printer.paperRect().center());
+    painter.translate(printer.paperRect(QPrinter::DevicePixel).center());
     painter.scale(scale, scale);
     painter.translate(-this->width()/ 2, -this->height()/ 2);
 

@@ -26,6 +26,8 @@ void GuestsWidget::setupUi() {
 
     save = new QPushButton("Сохранить");
 
+    connect(save, &QPushButton::clicked, this, &GuestsWidget::saveGuest);
+
     nameLayout = new QHBoxLayout;
     nameLayout->addWidget(new QLabel("ФИО Гостя"));
     nameLayout->addWidget(name);
@@ -58,6 +60,9 @@ void GuestsWidget::setupWorker() {
     connect(worker, &SQLWorker::getGuestDataReady, this, &GuestsWidget::processGuestData);
     connect(this, &GuestsWidget::getGuestBookingHistory, worker, &SQLWorker::getGuestBookingHistory);
     connect(worker, &SQLWorker::getGuestBookingHistoryReady, this, &GuestsWidget::processGuestBookingHistory);
+
+    connect(this, &GuestsWidget::updateGuest, worker, &SQLWorker::updateGuest);
+    connect(this, &GuestsWidget::insertGuest, worker, &SQLWorker::insertGuest);
 }
 
 void GuestsWidget::loadPage() {
@@ -66,6 +71,7 @@ void GuestsWidget::loadPage() {
 }
 
 void GuestsWidget::processGuestData(QVariantMap guest) {
+    isOutside = guest.isEmpty();
     name->setText(guest["name"].toString());
     passport->setText(guest["passport"].toString());
     phone->setText(guest["phone"].toString());
@@ -83,5 +89,25 @@ void GuestsWidget::processGuestBookingHistory(QVector<QVariantMap> bookings) {
         bookingHistoryModel->setData(bookingHistoryModel->index(i, 3), booking["fromDate"]);
         bookingHistoryModel->setData(bookingHistoryModel->index(i, 4), booking["toDate"]);
     }
+}
+
+void GuestsWidget::saveGuest() {
+    const QVariantMap guest = currentGuestMap();
+
+    if (isOutside) {
+        emit insertGuest(guest);
+    } else {
+        emit updateGuest(guest);
+    }
+}
+
+QVariantMap GuestsWidget::currentGuestMap() {
+    QVariantMap guestMap;
+    guestMap["id"] = curInd;
+    guestMap["name"] = name->text();
+    guestMap["passport"] = passport->text();
+    guestMap["phone"] = phone->text();    
+
+    return guestMap;
 }
 
