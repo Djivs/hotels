@@ -216,9 +216,9 @@ void SQLWorker::getGuestData(int id) {
 
     QVariantMap guest;
     if (query.next()) {
-        guest["name"] = query.value(0);
-        guest["passport"] = query.value(1);
-        guest["phone"] = query.value(2);
+        guest["name"] = query.value(1);
+        guest["passport"] = query.value(2);
+        guest["phone"] = query.value(3);
     }
     emit getGuestDataReady(guest);
 }
@@ -227,7 +227,10 @@ void SQLWorker::getGuestBookingHistory(int id) {
     query.prepare("select * from get_guest_booking_history(:id)");
     query.bindValue(":id", id);
 
-    query.exec();
+    if (!query.exec()) {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
+    }
     QVector <QVariantMap> bookings;
     while (query.next()) {
         QVariantMap booking;
@@ -289,6 +292,9 @@ void SQLWorker::updateRoom(QVariantMap room) {
 
     if (query.next()) {
         hotelId = query.value(0).toInt();
+    } else {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
     }
 
     query = QSqlQuery();
@@ -299,19 +305,25 @@ void SQLWorker::updateRoom(QVariantMap room) {
 
     if (query.next()) {
         kindId = query.value(0).toInt();
+    } else {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
     }
 
     query = QSqlQuery();
-    query.prepare("update room set hotel_id = :hotel_id, kind_id = :kind_id, number = :number, price = :price, availability = :availability where id = :id");
+    query.prepare("update room set hotel_id = :hotel_id, kind_id = :kind_id, number = :number, price = :cost, availability = :availability where id = :id");
 
     query.bindValue(":hotel_id", hotelId);
     query.bindValue(":kind_id", kindId);
     query.bindValue(":number", room["number"]);
-    query.bindValue(":price", room["price"]);
+    query.bindValue(":cost", room["cost"]);
     query.bindValue(":availability", room["availability"]);
     query.bindValue(":id", room["id"]);
 
-    query.exec();
+    if (!query.exec()) {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
+    }
 
 
 
@@ -327,6 +339,9 @@ void SQLWorker::insertRoom(QVariantMap room) {
 
     if (query.next()) {
         hotelId = query.value(0).toInt();
+    } else {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
     }
 
     query = QSqlQuery();
@@ -337,15 +352,18 @@ void SQLWorker::insertRoom(QVariantMap room) {
 
     if (query.next()) {
         kindId = query.value(0).toInt();
+    } else {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
     }
 
     query = QSqlQuery();
-    query.prepare("insert into room values(:id, :hotel_id, :kind_id, :number, :price, :availability");
+    query.prepare("insert into room values(:id, :hotel_id, :kind_id, :number, :cost, :availability)");
 
     query.bindValue(":hotel_id", hotelId);
     query.bindValue(":kind_id", kindId);
     query.bindValue(":number", room["number"]);
-    query.bindValue(":price", room["price"]);
+    query.bindValue(":cost", room["cost"]);
     query.bindValue(":availability", room["availability"]);
     query.bindValue(":id", room["id"]);
 
@@ -362,17 +380,23 @@ void SQLWorker::updateWorker(QVariantMap worker) {
 
     if (query.next()) {
         hotelId = query.value(0).toInt();
+    } else {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
     }
 
     query = QSqlQuery();
-    query.prepare("update workers set hotel_id = :hotel_id, name = :name, position = :position, where id = :id");
+    query.prepare("update workers set hotel_id = :hotel_id, name = :name, position = :position where id = :id");
 
     query.bindValue(":hotel_id", hotelId);
     query.bindValue(":name", worker["name"]);
-    query.bindValue(":postition", worker["position"]);
+    query.bindValue(":position", worker["position"]);
     query.bindValue(":id", worker["id"]);
 
-    query.exec();
+    if (!query.exec()) {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
+    }
 }
 void SQLWorker::insertWorker(QVariantMap worker) {
     int hotelId = -1;
@@ -395,7 +419,10 @@ void SQLWorker::insertWorker(QVariantMap worker) {
     query.bindValue(":postition", worker["position"]);
     query.bindValue(":id", worker["id"]);
 
-    query.exec();
+    if (!query.exec()) {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
+    }
 }
 void SQLWorker::updateGuest(QVariantMap guest) {
     QSqlQuery query;
@@ -440,10 +467,10 @@ void SQLWorker::getWorkers() {
     QSqlQuery query;
     query.prepare("select * from all_workers_data()");
 
-    query.exec();
-
-    qDebug() << query.lastQuery();
-    qDebug() << query.lastError();
+    if (!query.exec()) {
+        qDebug() << query.lastQuery();
+        qDebug() << query.lastError();
+    }
 
     QVector <QVariantMap> workers;
     while (query.next()) {

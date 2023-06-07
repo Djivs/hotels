@@ -29,6 +29,7 @@ set(PROJECT_SOURCES
         freeroomswidget.h freeroomswidget.cpp
         totalprofitwidget.h totalprofitwidget.cpp
         comboboxitemdelegate.h comboboxitemdelegate.cpp
+        bookwidget.h bookwidget.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

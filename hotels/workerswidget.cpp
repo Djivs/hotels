@@ -79,7 +79,6 @@ void WorkersWidget::processWorkersData(QVector<QVariantMap> workers) {
 
         for (int j = 0; j < box->count(); ++j) {
             if (box->itemText(j) == workers[i]["hotel"].toString()) {
-                qDebug() << j;
                 box->setCurrentIndex(j);
                 break;
             }
@@ -118,7 +117,7 @@ QVariantMap WorkersWidget::getWorkersMap(int row) {
     worker["hotel"] = dynamic_cast<QComboBox*>(table->indexWidget(model->index(row, 0)))->currentText();
     worker["name"] = model->data(model->index(row, 1));
     worker["position"] = model->data(model->index(row, 2));
-    worker["id"] = row - 1;
+    worker["id"] = row + 1;
 
 
     return worker;

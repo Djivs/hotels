@@ -38,7 +38,7 @@ private:
 
     QComboBox *hotelBox;
     QSpinBox *roomNumberBox;
-    QLineEdit *cost;
+    QSpinBox *cost;
     QCheckBox *availability;
     QGroupBox *kindBox;
     QPushButton *save;

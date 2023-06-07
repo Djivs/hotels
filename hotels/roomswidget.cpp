@@ -33,10 +33,13 @@ void RoomsWidget::setupWorker() {
 void RoomsWidget::setupUi() {
     hotelBox = new QComboBox;
     roomNumberBox = new QSpinBox;
-    cost = new QLineEdit;
+    cost = new QSpinBox;
     availability = new QCheckBox;
     kindBox = new QGroupBox;
     save = new QPushButton("Сохранить");
+
+    cost->setMaximum(1);
+    roomNumberBox->setMaximum(1);
 
     hotelLayout = new QHBoxLayout;
     hotelLayout->addWidget(new QLabel("Отель"));
@@ -70,14 +73,19 @@ void RoomsWidget::setupUi() {
 
     setLayout(layout);
 
+    connect(save, &QPushButton::clicked, this, &RoomsWidget::saveRoom);
+
 }
 
 void RoomsWidget::processRoomData(QVariantMap room) {
     isOutside = room.isEmpty();
 
-    const auto hotelName = room["hotel"].toString();
-    const auto kindName = room["kind"].toString();
-    const auto roomNumber = room["number"].toInt();
+    const QString hotelName = room["hotel"].toString();
+    const QString kindName = room["kind"].toString();
+    const int roomNumber = room["number"].toInt();
+    const int costNumber = room["cost"].toInt();
+
+    qDebug() << roomNumber << roomNumberBox->maximum();
     for (int i = 0; i < hotelBox->count(); ++i) {
         if (hotelBox->itemText(i) == hotelName) {
             hotelBox->setCurrentIndex(i);
@@ -90,12 +98,17 @@ void RoomsWidget::processRoomData(QVariantMap room) {
         }
     }
 
-    roomNumberBox->setValue(roomNumber);
-    if (roomNumber > roomNumberBox->maximum()) {
-        roomNumberBox->setMaximum(roomNumber + 1);
+    if (costNumber > cost->maximum()) {
+        cost->setMaximum(costNumber);
     }
 
-    cost->setText(room["cost"].toString());
+    if (roomNumber > roomNumberBox->maximum()) {
+        roomNumberBox->setMaximum(roomNumber);
+    }
+
+    roomNumberBox->setValue(roomNumber);
+    cost->setValue(room["cost"].toInt());
+
     availability->setChecked(room["availability"].toBool());
 
 
@@ -141,7 +154,7 @@ QVariantMap RoomsWidget::getCurrentRoomMap() {
     room["id"] = curInd;
     room["hotel"] = hotelBox->currentText();
     room["number"] = roomNumberBox->value();
-    room["cost"] = cost->text();
+    room["cost"] = cost->value();
     room["availability"] = availability->isChecked();
 
     QString kind;

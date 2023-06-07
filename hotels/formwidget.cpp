@@ -25,6 +25,10 @@ void FormWidget::setupFormHeader() {
         ++curInd;
         loadPage();
     });
+
+    connect(formHeader, &FormHeader::print, this, [this] {
+        printPage();
+    });
 }
 
 void FormWidget::printPage() {
