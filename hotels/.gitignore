@@ -1,6 +1,11 @@
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
+# my settings
+moc_*
+*.cmake
+#end of my settings
+
 *~
 *.autosave
 *.a

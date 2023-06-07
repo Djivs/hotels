@@ -86,9 +86,10 @@ void UserWidget::setupWorker() {
 void UserWidget::makeBooking() {
 
     const QPair<QDate, QDate> dateRange = calendar->getRange();
-    const int roomNumber = roomBox->currentText().toInt();
+    //const int roomNumber = roomBox->currentText().toInt();
+    const auto room = roomBox->currentText().split(" - ");
 
-    emit book(guestId, roomNumber, dateRange.first, dateRange.second);
+    emit book(room[1], guestName->text(), room[0].toInt(), dateRange.first, dateRange.second);
 
     QMessageBox::information(this, "Бронирование", "Забронировано!");
 
@@ -102,17 +103,17 @@ void UserWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
     for (int i = 0; i < rooms.size(); ++i) {
         const auto room = rooms[i];
 
-        const auto hotelName = room["hotel_name"];
+        const auto hotelName = room["hotel"];
         const auto kind = room["kind"];
         const auto number = room["number"];
-        const auto price = room["price"];
+        const auto price = room["cost"];
 
         freeRoomsModel->setData(freeRoomsModel->index(i, 0), hotelName);
         freeRoomsModel->setData(freeRoomsModel->index(i, 1), kind);
         freeRoomsModel->setData(freeRoomsModel->index(i, 2), number);
         freeRoomsModel->setData(freeRoomsModel->index(i, 3), price);
 
-        roomBox->addItem(number.toString());
+        roomBox->addItem(number.toString() + " - " + hotelName.toString());
     }
 }
 

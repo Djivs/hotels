@@ -4,6 +4,7 @@
         "chrono": "cpp",
         "optional": "cpp",
         "format": "cpp",
-        "system_error": "cpp"
+        "system_error": "cpp",
+        "qpainter": "cpp"
     }
 }

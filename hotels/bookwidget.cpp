@@ -5,15 +5,14 @@
 #include <QCompleter>
 #include <QMessageBox>
 
-BookWidget::BookWidget(SQLWorker *w, int _guestId) {
+BookWidget::BookWidget(SQLWorker *w) {
     worker = w;
-    guestId = _guestId;
 
     setupUi();
     setupWorker();
 
     emit getFreeRooms(QDate::currentDate(), QDate::currentDate());
-    emit getGuest(guestId);
+    //emit getGuest(guestId);
 }
 
 void BookWidget::setupUi() {
@@ -74,11 +73,11 @@ void BookWidget::setupWorker() {
     connect(this, &BookWidget::getGuests, worker, &SQLWorker::getGuests);
     connect(worker, &SQLWorker::getGuestsReady, this, &BookWidget::processGuests);
 
-    connect(this, &BookWidget::getGuest, worker, &SQLWorker::getGuest);
-    connect(worker, &SQLWorker::getGuestReady, this, &BookWidget::processGuest);
+    // connect(this, &BookWidget::getGuest, worker, &SQLWorker::getGuest);
+    // connect(worker, &SQLWorker::getGuestReady, this, &BookWidget::processGuest);
 
     connect(bookButton, &QPushButton::clicked, this, &BookWidget::makeBooking);
-    connect(this, &BookWidget::book, worker, &SQLWorker::book);
+    //connect(this, &BookWidget::book, worker, &SQLWorker::book);
 
     connect(calendar, &CalendarWidget::rangeChanged, this, [this] {emit getFreeRooms(calendar->getFromDate(), calendar->getToDate());});
 }
@@ -88,7 +87,7 @@ void BookWidget::makeBooking() {
     const QPair<QDate, QDate> dateRange = calendar->getRange();
     const int roomNumber = roomBox->currentText().toInt();
 
-    emit book(guestId, roomNumber, dateRange.first, dateRange.second);
+    // emit book(guestId, roomNumber, dateRange.first, dateRange.second);
 
     QMessageBox::information(this, "Бронирование", "Забронировано!");
 
@@ -120,6 +119,6 @@ void BookWidget::processGuests(QStringList guests) {
     guestName->setCompleter(new QCompleter(guests));
 }
 
-void BookWidget::processGuest(QString name) {
-    guestName->setText(name);
-}
+// void BookWidget::processGuest(QString name) {
+//     guestName->setText(name);
+// }

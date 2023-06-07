@@ -25,7 +25,7 @@ signals:
     void getGuests();
     void getGuest(int);
     void exit();
-    void book(int, int, QDate, QDate);
+    void book(QString, QString, int, QDate, QDate);
 private slots:
     void processFreeRooms(QVector <QMap <QString, QVariant>> rooms);
     void processGuests(QStringList guests);

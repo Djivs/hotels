@@ -28,6 +28,7 @@ private slots:
     void processHotelData(QMap <QString, QVariant> hotel);
     void processHotelRooms(QVector <QMap <QString, QVariant>> rooms);
     void saveHotel();
+    void openBookingWidget();
 private:
     void setupWorker();
     void setupUi();

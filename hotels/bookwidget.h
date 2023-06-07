@@ -19,17 +19,15 @@ class BookWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit BookWidget(SQLWorker *w, int _guestId);
+    explicit BookWidget(SQLWorker *w);
 signals:
     void getFreeRooms(QDate from, QDate to);
     void getGuests();
-    void getGuest(int);
     void exit();
     void book(int, int, QDate, QDate);
 private slots:
     void processFreeRooms(QVector <QMap <QString, QVariant>> rooms);
     void processGuests(QStringList guests);
-    void processGuest(QString name);
     void makeBooking();
 private:
     void setupUi();
@@ -54,10 +52,6 @@ private:
     SQLWorker *worker;
 
     QStringList header = {"Отель", "Тип", "Номер", "Цена"};
-
-    int guestId;
-
-
 };
 
 #endif // USERWIDGET_H

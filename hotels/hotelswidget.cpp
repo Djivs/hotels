@@ -2,6 +2,8 @@
 
 #include <QLabel>
 
+#include "bookwidget.h"
+
 HotelsWidget::HotelsWidget(SQLWorker *w, FormWidget *parent) :
 FormWidget{parent} {
     worker = w;
@@ -75,7 +77,6 @@ void HotelsWidget::setupWorker() {
 
     connect(this, &HotelsWidget::updateHotel, worker, &SQLWorker::updateHotel);
     connect(this, &HotelsWidget::insertHotel, worker, &SQLWorker::insertHotel);
-
 }
 
 void HotelsWidget::loadPage() {
@@ -91,6 +92,7 @@ void HotelsWidget::processHotelData(QMap <QString, QVariant> hotel) {
     address->setText(hotel["address"].toString());
     phone->setText(hotel["phone"].toString());
 }
+
 void HotelsWidget::processHotelRooms(QVector <QMap <QString, QVariant>> rooms) {
     roomsModel->removeRows(0, roomsModel->rowCount());
 
@@ -125,4 +127,7 @@ QVariantMap HotelsWidget::getCurrentHotelMap() {
     hotel["id"] = curInd;
 
     return hotel;
+}
+
+void HotelsWidget::openBookingWidget() {
 }

@@ -87,11 +87,12 @@ void SQLWorker::getGuest(int id) {
 
 }
 
-void SQLWorker::book(int guestId, int roomNumber, QDate fromDate, QDate toDate) {
+void SQLWorker::book(QString hotel, QString guest, int roomNumber, QDate fromDate, QDate toDate) {
     QSqlQuery query;
-    query.prepare("select * from book(:guestId, :roomNumber, :fromDate, :toDate)");
+    query.prepare("select * from book(:hotel, :guest, :roomNumber, :fromDate, :toDate)");
 
-    query.bindValue(":guestId", guestId);
+    query.bindValue(":hotel", hotel);
+    query.bindValue(":guest", guest);
     query.bindValue(":roomNumber", roomNumber);
     query.bindValue(":fromDate", fromDate);
     query.bindValue(":toDate", toDate);
