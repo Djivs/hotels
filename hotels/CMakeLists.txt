@@ -28,7 +28,6 @@ set(PROJECT_SOURCES
         guestswidget.h guestswidget.cpp
         freeroomswidget.h freeroomswidget.cpp
         totalprofitwidget.h totalprofitwidget.cpp
-        comboboxitemdelegate.h comboboxitemdelegate.cpp
         bookwidget.h bookwidget.cpp
 )
 

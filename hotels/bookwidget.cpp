@@ -5,13 +5,16 @@
 #include <QCompleter>
 #include <QMessageBox>
 
-BookWidget::BookWidget(SQLWorker *w) {
+BookWidget::BookWidget(SQLWorker *w, QString _hotelName) {
+    hotelName = _hotelName;
+
     worker = w;
 
     setupUi();
     setupWorker();
 
     emit getFreeRooms(QDate::currentDate(), QDate::currentDate());
+    emit getGuests();
     //emit getGuest(guestId);
 }
 
@@ -28,7 +31,7 @@ void BookWidget::setupUi() {
     freeRoomsTable->setModel(freeRoomsModel);
 
     guestName = new QLineEdit;
-    guestName->setReadOnly(true);
+    
 
     roomBox = new QComboBox;
     calendar = new CalendarWidget;
@@ -49,7 +52,7 @@ void BookWidget::setupUi() {
     calendarLayout->addWidget(calendar);
 
     layout = new QVBoxLayout;
-    layout->addWidget(new QLabel("Бронирование номеров"));
+    layout->addWidget(new QLabel("Бронирование номеров в отеле " + hotelName));
     layout->addLayout(guestLayout);
     layout->addWidget(new QLabel("Свободные номера:"));
     layout->addWidget(freeRoomsTable);
@@ -77,7 +80,7 @@ void BookWidget::setupWorker() {
     // connect(worker, &SQLWorker::getGuestReady, this, &BookWidget::processGuest);
 
     connect(bookButton, &QPushButton::clicked, this, &BookWidget::makeBooking);
-    //connect(this, &BookWidget::book, worker, &SQLWorker::book);
+    connect(this, &BookWidget::book, worker, &SQLWorker::book);
 
     connect(calendar, &CalendarWidget::rangeChanged, this, [this] {emit getFreeRooms(calendar->getFromDate(), calendar->getToDate());});
 }
@@ -87,7 +90,7 @@ void BookWidget::makeBooking() {
     const QPair<QDate, QDate> dateRange = calendar->getRange();
     const int roomNumber = roomBox->currentText().toInt();
 
-    // emit book(guestId, roomNumber, dateRange.first, dateRange.second);
+    emit book(hotelName, guestName->text(), roomNumber, dateRange.first, dateRange.second);
 
     QMessageBox::information(this, "Бронирование", "Забронировано!");
 
@@ -97,19 +100,25 @@ void BookWidget::makeBooking() {
 void BookWidget::processFreeRooms(QVector <QMap <QString, QVariant>> rooms) {
     roomBox->clear();
     freeRoomsModel->removeRows(0, freeRoomsModel->rowCount());
-    freeRoomsModel->setRowCount(rooms.size());
+    //freeRoomsModel->setRowCount(rooms.size());
     for (int i = 0; i < rooms.size(); ++i) {
         const auto room = rooms[i];
 
-        const auto hotelName = room["hotel_name"];
+        const auto hotel = room["hotel"];
+
+        if (hotel != hotelName) {
+            continue;
+        }
         const auto kind = room["kind"];
         const auto number = room["number"];
-        const auto price = room["price"];
+        const auto price = room["cost"];
 
-        freeRoomsModel->setData(freeRoomsModel->index(i, 0), hotelName);
-        freeRoomsModel->setData(freeRoomsModel->index(i, 1), kind);
-        freeRoomsModel->setData(freeRoomsModel->index(i, 2), number);
-        freeRoomsModel->setData(freeRoomsModel->index(i, 3), price);
+        freeRoomsModel->insertRow(freeRoomsModel->rowCount());
+
+        const int row = freeRoomsModel->rowCount() - 1;
+        freeRoomsModel->setData(freeRoomsModel->index(row, 0), kind);
+        freeRoomsModel->setData(freeRoomsModel->index(row, 1), number);
+        freeRoomsModel->setData(freeRoomsModel->index(row, 2), price);
 
         roomBox->addItem(number.toString());
     }

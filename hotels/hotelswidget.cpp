@@ -28,6 +28,8 @@ void HotelsWidget::setupUi() {
     address = new QLineEdit;
     phone = new QLineEdit;
 
+    formHeader->setTitle("Отели");
+
     roomsModel = new QStandardItemModel;
     roomsModel->setColumnCount(header.size());
     roomsModel->setHorizontalHeaderLabels(header);
@@ -38,6 +40,7 @@ void HotelsWidget::setupUi() {
     save = new QPushButton("Сохранить");
 
     connect(save, &QPushButton::clicked,this, &HotelsWidget::saveHotel);
+    connect(bookRoom, &QPushButton::clicked, this, &HotelsWidget::openBookingWidget);
 
     QHBoxLayout *nameLayout = new QHBoxLayout;
     nameLayout->addWidget(new QLabel("Название"));
@@ -130,4 +133,9 @@ QVariantMap HotelsWidget::getCurrentHotelMap() {
 }
 
 void HotelsWidget::openBookingWidget() {
+    BookWidget *w = new BookWidget(worker, name->text());
+
+    w->show();
+
+    w->setAttribute(Qt::WA_DeleteOnClose);
 }

@@ -1,7 +1,5 @@
 #include "workerswidget.h"
 
-#include "comboboxitemdelegate.h"
-
 #include <QLabel>
 #include <QComboBox>
 
@@ -19,9 +17,6 @@ void WorkersWidget::setupUi() {
     model = new QStandardItemModel;
     table = new QTableView;
     table->setModel(model);
-
-    ComboBoxItemDelegate *cbid = new ComboBoxItemDelegate(table);
-    table->setItemDelegateForColumn(0, cbid);
 
     model->setColumnCount(header.size());
     model->setHorizontalHeaderLabels(header);

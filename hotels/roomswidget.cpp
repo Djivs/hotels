@@ -38,6 +38,8 @@ void RoomsWidget::setupUi() {
     kindBox = new QGroupBox;
     save = new QPushButton("Сохранить");
 
+    formHeader->setTitle("Номера");
+
     cost->setMaximum(1);
     roomNumberBox->setMaximum(1);
 
@@ -63,7 +65,6 @@ void RoomsWidget::setupUi() {
 
     layout = new QVBoxLayout;
     layout->addWidget(formHeader);
-    formHeader->setTitle("Номера");
     layout->addLayout(hotelLayout);
     layout->addLayout(numberLayout);
     layout->addLayout(costLayout);

@@ -5,6 +5,7 @@
         "optional": "cpp",
         "format": "cpp",
         "system_error": "cpp",
-        "qpainter": "cpp"
+        "qpainter": "cpp",
+        "qstandarditemmodel": "cpp"
     }
 }

@@ -18,6 +18,8 @@ void GuestsWidget::setupUi() {
     passport = new QLineEdit;
     phone = new QLineEdit;
 
+    formHeader->setTitle("Гости");
+
     bookingHistoryModel = new QStandardItemModel;
     bookingHistoryModel->setHorizontalHeaderLabels(header);
     bookingHistoryModel->setColumnCount(header.size());

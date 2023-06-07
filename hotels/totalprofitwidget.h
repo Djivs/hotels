@@ -13,12 +13,14 @@ signals:
     void getProfits();
 private slots:
     void processProfits(QVariantMap);
+    void print();
 private:
     void loadPage();
     void setupWorker();
     void setupUi();
 
     QChartView *chartView;
+    QPushButton *printButton;
     QPushButton *leave;
 };
 
