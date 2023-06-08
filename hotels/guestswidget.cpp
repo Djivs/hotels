@@ -17,6 +17,8 @@ void GuestsWidget::setupUi() {
     name = new QLineEdit;
     passport = new QLineEdit;
     phone = new QLineEdit;
+    login = new QLineEdit;
+    password = new QLineEdit;
 
     formHeader->setTitle("Гости");
 
@@ -29,6 +31,14 @@ void GuestsWidget::setupUi() {
     save = new QPushButton("Сохранить");
 
     connect(save, &QPushButton::clicked, this, &GuestsWidget::saveGuest);
+
+    loginLayout = new QHBoxLayout;
+    loginLayout->addWidget(new QLabel("Логин"));
+    loginLayout->addWidget(login);
+
+    passwordLayout = new QHBoxLayout;
+    passwordLayout->addWidget(new QLabel("Пароль"));
+    passwordLayout->addWidget(password);
 
     nameLayout = new QHBoxLayout;
     nameLayout->addWidget(new QLabel("ФИО Гостя"));
@@ -51,6 +61,8 @@ void GuestsWidget::setupUi() {
     layout->addLayout(nameLayout);
     layout->addLayout(passportLayout);
     layout->addLayout(phoneLayout);
+    //layout->addLayout(loginLayout);
+    //layout->addLayout(passwordLayout);
     layout->addLayout(bookingHistoryLayout);
     layout->addWidget(save);
 
@@ -70,6 +82,7 @@ void GuestsWidget::setupWorker() {
 void GuestsWidget::loadPage() {
     emit getGuestData(curInd);
     emit getGuestBookingHistory(curInd);
+    emit getGuestCredentials(curInd);
 }
 
 void GuestsWidget::processGuestData(QVariantMap guest) {

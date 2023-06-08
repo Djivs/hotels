@@ -18,9 +18,13 @@ signals:
     void getGuestBookingHistory(int);
     void updateGuest(QVariantMap);
     void insertGuest(QVariantMap);
+    void getGuestCredentials(int);
+    void updateGuestCredentials(QVariantMap);
+    void insertGuestCredentials(QVariantMap);
 private slots:
     void processGuestData(QVariantMap);
     void processGuestBookingHistory(QVector<QVariantMap>);
+    void processGuestCredentials(QVariantMap) {};
     void saveGuest();
 private:
     void loadPage();
@@ -32,10 +36,14 @@ private:
     QLineEdit *name;
     QLineEdit *passport;
     QLineEdit *phone;
+    QLineEdit *login;
+    QLineEdit *password;
 
     QStandardItemModel *bookingHistoryModel;
     QTableView *bookingHistoryTable;
 
+    QHBoxLayout *loginLayout;
+    QHBoxLayout *passwordLayout;
     QHBoxLayout *nameLayout;
     QHBoxLayout *passportLayout;
     QHBoxLayout *phoneLayout;

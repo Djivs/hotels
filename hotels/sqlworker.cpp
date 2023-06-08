@@ -141,7 +141,6 @@ void SQLWorker::getHotelData(int id) {
     emit getHotelDataReady(hotel);
 }
 void SQLWorker::getHotelRoomsData(int id) {
-    qDebug() << id;
     QSqlQuery query;
     query.prepare("select * from get_hotel_rooms(:id)");
     query.bindValue(":id", id);
@@ -157,8 +156,6 @@ void SQLWorker::getHotelRoomsData(int id) {
         room["availability"] = query.value(3);
         rooms.push_back(room);
     }
-
-    qDebug() << rooms;
 
 
     emit getHotelRoomsDataReady(rooms);
@@ -486,4 +483,20 @@ void SQLWorker::getWorkers() {
     }
 
     emit getWorkersReady(workers);
+}
+
+void SQLWorker::getGuestCredentials(int id) {
+    QSqlQuery query;
+    query.prepare("select * from get_guest_credentials(:id)");
+    query.bindValue(":id", id);
+
+    QVariantMap m;
+
+    if (query.next()) {
+        m["login"] = query.value(0);
+        m["password"] = query.value(1);
+    } else {
+        qDebug() << query.lastError();
+        qDebug() << query.lastQuery();
+    }
 }

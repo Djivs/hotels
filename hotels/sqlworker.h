@@ -26,6 +26,7 @@ signals:
     void getGuestBookingHistoryReady(QVector <QVariantMap>);
     void getOverallHotelsProfitsReady(QVariantMap);
     void getWorkersReady(QVector <QVariantMap>);
+    void getGuestCredentialsReady(QVariantMap);
 public slots:
     void book(QString hotel, QString guest, int roomNumber, QDate fromDate, QDate toDate);
     void checkUser(QString login, QString pass);
@@ -51,6 +52,9 @@ public slots:
     void insertWorker(QVariantMap worker);
     void updateGuest(QVariantMap guest);
     void insertGuest(QVariantMap guest);
+    void getGuestCredentials(int id);
+    //void insertGuestCredentials(QVariantMap guest);
+    //void updateGuestCredentials(QVariantMap guest);
 private:
     QSqlDatabase db;
 
