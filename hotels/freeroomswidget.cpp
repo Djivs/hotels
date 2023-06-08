@@ -1,6 +1,7 @@
 #include "freeroomswidget.h"
 
 #include <QLabel>
+#include <QFileDialog>
 
 FreeRoomsWidget::FreeRoomsWidget(SQLWorker *w)
 {
@@ -93,4 +94,23 @@ void FreeRoomsWidget::processSearch(const QString& searchingFor) {
             roomsTable->showRow(i);
         }
     }
+}
+
+void FreeRoomsWidget::print() {
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(QFileDialog::getSaveFileName());
+    printer.setFullPage(true);
+
+    QPainter painter(&printer);
+
+
+    double xscale = printer.pageRect(QPrinter::DevicePixel).width() / double(this->width());
+    double yscale = printer.pageRect(QPrinter::DevicePixel).height() / double(this->height());
+    double scale = qMin(xscale, yscale);
+    painter.translate(printer.paperRect(QPrinter::DevicePixel).center());
+    painter.scale(scale, scale);
+    painter.translate(-this->width()/ 2, -this->height()/ 2);
+
+    this->render(&painter);
 }

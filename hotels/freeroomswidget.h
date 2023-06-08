@@ -20,6 +20,7 @@ private slots:
     void processFreeRooms(QVector <QVariantMap>);
     void processSearch(const QString&);
     void goBack(bool checked);
+    void print();
 private:
     void loadPage();
     void setupWorker();

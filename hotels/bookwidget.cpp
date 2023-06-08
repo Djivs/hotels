@@ -37,7 +37,6 @@ void BookWidget::setupUi() {
     calendar = new CalendarWidget;
 
     bookButton = new QPushButton("Забронировать");
-    exitButton = new QPushButton("Обратно");
 
     guestLayout = new QHBoxLayout;
     guestLayout->addWidget(new QLabel("Имя гостя:"));
@@ -59,13 +58,8 @@ void BookWidget::setupUi() {
     layout->addLayout(roomLayout);
     layout->addLayout(calendarLayout);
     layout->addWidget(bookButton);
-    layout->addWidget(exitButton);
 
     setLayout(layout);
-
-    connect(exitButton, &QPushButton::clicked, this, [this] {
-        emit exit();
-    });
 
 }
 

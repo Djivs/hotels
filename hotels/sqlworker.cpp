@@ -97,7 +97,10 @@ void SQLWorker::book(QString hotel, QString guest, int roomNumber, QDate fromDat
     query.bindValue(":fromDate", fromDate);
     query.bindValue(":toDate", toDate);
 
-    query.exec();
+    if (!query.exec()) {
+        qDebug () << query.lastQuery();
+        qDebug() << query.lastError();
+    }
 }
 
 void SQLWorker::getHotels() {

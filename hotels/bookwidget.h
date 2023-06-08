@@ -33,8 +33,6 @@ private:
     void setupUi();
     void setupWorker();
 
-    QPushButton *exitButton;
-
     QStandardItemModel *freeRoomsModel;
     QTableView *freeRoomsTable;
 
