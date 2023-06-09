@@ -417,7 +417,7 @@ void SQLWorker::insertWorker(QVariantMap worker) {
 
     query.bindValue(":hotel_id", hotelId);
     query.bindValue(":name", worker["name"]);
-    query.bindValue(":postition", worker["position"]);
+    query.bindValue(":position", worker["position"]);
     query.bindValue(":id", worker["id"]);
 
     if (!query.exec()) {
