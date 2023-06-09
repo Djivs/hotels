@@ -30,6 +30,7 @@ void FreeRoomsWidget::setupUi() {
     connect(calendar, &CalendarWidget::rangeChanged, this, &FreeRoomsWidget::loadPage);
 
     save = new QPushButton("Сохранить");
+    printButton = new QPushButton("Распечатать");
     leave = new QPushButton("Обратно");
 
     searchLayout = new QHBoxLayout;
@@ -41,11 +42,13 @@ void FreeRoomsWidget::setupUi() {
     layout->addLayout(searchLayout);
     layout->addWidget(roomsTable);
     layout->addWidget(calendar);
-    layout->addWidget(save);
+    layout->addWidget(printButton);
+    //layout->addWidget(save);
     layout->addWidget(leave);
     setLayout(layout);
 
     connect(leave, &QPushButton::clicked, this, &FreeRoomsWidget::goBack);
+    connect(printButton, &QPushButton::clicked, this, &FreeRoomsWidget::print);
 }
 
 void FreeRoomsWidget::goBack(bool checked) {

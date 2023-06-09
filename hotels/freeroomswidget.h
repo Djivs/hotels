@@ -30,6 +30,7 @@ private:
     QStandardItemModel *roomsModel;
     QTableView *roomsTable;
     QPushButton *save;
+    QPushButton *printButton;
     QPushButton *leave;
     CalendarWidget *calendar;
     
